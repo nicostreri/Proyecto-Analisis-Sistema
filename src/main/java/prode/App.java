@@ -18,7 +18,8 @@ public class App
         Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");
 
         User u = new User();
-        u.set("username", "Riquelme");
+	    u.set("username", "nico");
+        //u.set("username", "Riquelme");
         u.set("password", "password");
         u.saveIt();
 
