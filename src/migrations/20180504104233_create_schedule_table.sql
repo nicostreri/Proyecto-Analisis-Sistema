@@ -1,8 +1,8 @@
 create table schedules(
-	id integer auto_increment primary key,
-	nombre_fechas varchar(30),
-	id_fixture integer,
-	constraint ref_fixture foreign key (id_fixture) references fixtures (id),
+	id INTEGER AUTO_INCREMENT PRIMARY KEY,
+	nombre_fecha VARCHAR(30),
+	id_fixture INTEGER,
+	CONSTRAINT control_fixture_schedule FOREIGN KEY (id_fixture) REFERENCES fixtures (id),
 	create_at DATETIME,
 	update_at DATETIME
 )ENGINE=InnoDB;
