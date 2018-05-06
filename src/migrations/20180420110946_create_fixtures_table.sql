@@ -1,5 +1,5 @@
 CREATE TABLE fixtures (
-	id int(11) auto_increment PRIMARY KEY,
+	id integer auto_increment PRIMARY KEY,
 	name VARCHAR(128),
 	created_at DATETIME,
 	updated_at DATETIME

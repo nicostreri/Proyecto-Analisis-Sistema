@@ -1,5 +1,5 @@
 CREATE TABLE users (
-  id int(11) auto_increment PRIMARY KEY,
+  id integer auto_increment PRIMARY KEY,
   username VARCHAR(128),
   password VARCHAR(128),
   created_at DATETIME,
