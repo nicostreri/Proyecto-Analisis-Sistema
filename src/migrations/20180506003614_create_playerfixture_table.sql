@@ -1,4 +1,4 @@
-create table playerfixture (	
+create table playerfixtures (	
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
 	username_player varchar(128),
 	id_fixture INTEGER,
