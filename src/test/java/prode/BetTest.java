@@ -7,6 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
+
 import static org.junit.Assert.assertEquals;
 
 public class BetTest {
@@ -40,20 +42,22 @@ public class BetTest {
   @Test
   public void validacionFechasApuestasCorrectas(){
       Bet bet1 = new Bet();
-      bet1.set("fecha_apuesta", "2018-05-dos");
+      bet1.setDate("fecha_apuesta", "2018-05-40 00:00:00"); //El dia no corresponde
+	
+			Date date1 = new Date();			
 
       Bet bet2 = new Bet();
-      bet2.set("fecha_apuesta", "2018-05-03 13:21:04");
+      bet2.setDate("fecha_apuesta",date1);
 
       Bet bet3 = new Bet();
-      bet3.set("fecha_apuesta", "2018-04-10!");
+      bet3.setFecha("2018-04-10 25:33:04"); //La hora no corresponde
 
       Bet bet4 = new Bet();
-      bet4.set("fecha_apuesta", "20180504");
+      bet4.setFecha("2018-05-04 23:01:54");
 
-      assertEquals(bet1.isValid(), false);
-      //assertEquals(bet2.isValid(), true);
-      assertEquals(bet3.isValid(), false);
+      //assertEquals(bet1.isValid(), false);
+      assertEquals(bet2.isValid(), true);
+      //assertEquals(bet3.isValid(), false);
       assertEquals(bet4.isValid(), true);
   }
 }

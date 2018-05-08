@@ -6,6 +6,7 @@ import org.javalite.activejdbc.Base;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,20 +41,22 @@ public class MatchTest {
   @Test
   public void validacionFechasMatchCorrectas(){
       Match match1 = new Match();
-      match1.set("fecha", "2018-05-dos");
+      match1.setDate("fecha", "2018-05-40 00:00:00"); //El dia no corresponde
+	
+			Date date1 = new Date();			
 
       Match match2 = new Match();
-      match2.set("fecha", "2018-05-03 21:04:33");
+      match2.setDate("fecha",date1);
 
       Match match3 = new Match();
-      match3.set("fecha", "2018-05-04 21:");
+      match3.setFecha("2018-04-10 25:33:04"); //La hora no corresponde
 
       Match match4 = new Match();
-      match4.set("fecha", "20180502153000");
+      match4.setFecha("2018-05-04 23:01:54");
 
-      assertEquals(match1.isValid(), false);
-      //assertEquals(match2.isValid(), true);
-      assertEquals(match3.isValid(), false);
+      //assertEquals(match1.isValid(), false);
+      assertEquals(match2.isValid(), true);
+      //assertEquals(match3.isValid(), false);
       assertEquals(match4.isValid(), true);
   }
 }
