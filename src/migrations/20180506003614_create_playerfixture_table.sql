@@ -1,10 +1,10 @@
-create table playerfixtures (	
+create table players_fixtures (	
 	--id INTEGER AUTO_INCREMENT PRIMARY KEY,
 	username_player varchar(128),
-	id_fixture INTEGER,
-	primary key (username_player,id_fixture),
+	fixture_id INTEGER,
+	primary key (username_player,fixture_id),
 	CONSTRAINT control_player_suscripcion FOREIGN KEY (username_player) REFERENCES players(username),
-	CONSTRAINT control_fixture_suscripcion FOREIGN KEY (id_fixture) REFERENCES fixtures(id),
+	CONSTRAINT control_fixture_suscripcion FOREIGN KEY (fixture_id) REFERENCES fixtures(id),
 	created_at DATETIME,
   	updated_at DATETIME
 )ENGINE=InnoDB;

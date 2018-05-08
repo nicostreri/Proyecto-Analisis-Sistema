@@ -5,13 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Bet extends Model {
-		
-	 static{
-			dateFormat("yyyy-MM-dd HH:mm:ss","fecha_apuesta");
+	 static{	
+			dateFormat("yyyy-MM-dd HH:mm:ss","fecha_apuesta");//FORMATO: 'YYYY-MM-DD HH:MM:SS'
     	validatePresenceOf("fecha_apuesta").message("Ingrese fecha_apuesta");
-  		//validateRegexpOf("fecha_apuesta","\\b([0-9])\\w+\\b").message("Formato de fecha incorrecto.Numeros, guion, espacio y dos puntos ");//FORMATO: 'YYYY-MM-DD HH:MM:SS' Agregar guion,espacio y los 2 puntos.
-  }
-
+  	}
 		//Almacena una fecha
 		public void setFecha(String fecha){
 				setDate("fecha_apuesta",fecha);
@@ -32,8 +29,7 @@ public class Bet extends Model {
 		}
 		//Retorna la lista de todos los resultados relacionados con la apuesta
 		public List<Result> obtenerResultados(){
-			Bet bet = Bet.findById(this.get("id"));
-			List<Result> temp = bet.getAll(Result.class);
+			List<Result> temp = this.getAll(Result.class);
 			return temp;
 		}
 }

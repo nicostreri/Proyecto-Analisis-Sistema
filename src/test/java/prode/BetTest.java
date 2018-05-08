@@ -55,9 +55,9 @@ public class BetTest {
       Bet bet4 = new Bet();
       bet4.setFecha("2018-05-04 23:01:54");
 
-      //assertEquals(bet1.isValid(), false);
+      //assertEquals(bet1.isValid(), false);  CONSULTAR
       assertEquals(bet2.isValid(), true);
-      //assertEquals(bet3.isValid(), false);
+      //assertEquals(bet3.isValid(), false);  CONSULTAR
       assertEquals(bet4.isValid(), true);
   }
 }
