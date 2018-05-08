@@ -1,6 +1,7 @@
 package prode;
 
 import org.javalite.activejdbc.Model;
+import java.util.List;
 
 public class Score extends Model {
 
@@ -9,10 +10,12 @@ public class Score extends Model {
 		//validateNumericalityOf("partidos_acertados").greaterThan(0).onlyInteger().message("Cantidad de Partidos Acertados incorrecta");
 	}
 
-/*
-	| id                 | int(11)      | NO   | PRI | NULL    | auto_increment |
-| cant_puntos        | int(11)      | YES  |     | NULL    |                |
-| partidos_acertados | int(11)      | YES  |     | NULL    |                |
-| username_player    | varchar(128) | YES  | MUL | NULL    |                |
-| id_bet  */
+
+	/*
+		Retorna la lista de las prediciones por las cuales obtuvo la puntuacion
+	*/
+	public List<Prediction> obtenerListaPredicciones(){
+		List<Prediction> predicciones = Prediction.find("id_score= ?", this.get("id"));
+		return predicciones;
+	}
 }
