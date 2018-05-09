@@ -9,7 +9,7 @@ public class Prediction extends Model {
 		validateNumericalityOf("cant_gol_visit", "cant_gol_local","puntos_obtenidos").greaterThan(-1).onlyInteger().message("Cantidad de puntos incorrecta");
 	}
 	public void setTipo(String nuevoTipo){ //cambia el tipo_result
-		set("tipo_Result", nuevoTipo);
+		setString("tipo_Result", nuevoTipo);
 	}
 	
 	public void setCantGV(Integer cantV){ //cambia la goles como visitante	

@@ -28,10 +28,14 @@ public class ResultTest {
   public void validateTipoResultado(){
       Result resultado = new Result();
       resultado.setTipo("");
+      resultado.setCantGL(0);
+      resultado.setCantGV(0);
       assertEquals(resultado.isValid(), false);
 
       Result resultado2 = new Result();
-      resultado.setTipo(null);
+	  resultado2.setCantGL(0);
+      resultado2.setCantGV(0);
+      resultado2.setTipo(null);
       assertEquals(resultado2.isValid(), false);
   }
   
