@@ -25,7 +25,7 @@ public class ResultTest {
   }
 
   @Test
-  public void validateTipoReultado(){
+  public void validateTipoResultado(){
       Result resultado = new Result();
       resultado.setTipo("");
       assertEquals(resultado.isValid(), false);
@@ -37,21 +37,42 @@ public class ResultTest {
   
   @Test
   public void validacionCantGoles(){
+  	/*
+		Siguiendo la tabla de verdad se obtienen 4 combinaciones
+		Pos y Pos
+		Pos y Neg
+		Neg y Pos
+		Neg y Neg 
+		Solo el primer caso es valido
+  	*/
+
 	Result resul1 = new Result();
 	resul1.setCantGV(3);
+	resul1.setCantGL(3);
+	resul1.setTipo("NoJugado");
 	
 	
 	Result resul2 = new Result();
 	resul2.setCantGL(-20);
+	resul2.setCantGV(-5);
+	resul2.setTipo("NoJugado");
 	
 
 	Result resul3 = new Result();
-	resul3.setCantGL(null);
+	resul3.setCantGL(-20);
+	resul3.setCantGV(5);
+	resul3.setTipo("NoJugado");
+
+	Result resul4 = new Result();
+	resul4.setCantGL(20);
+	resul4.setCantGV(-5);
+	resul4.setTipo("NoJugado");
 	
 	
 	assertEquals(resul1.isValid(), true);
 	assertEquals(resul2.isValid(), false);
 	assertEquals(resul3.isValid(), false);
+	assertEquals(resul4.isValid(), false);
   } 
 
 }

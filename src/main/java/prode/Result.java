@@ -19,7 +19,8 @@ public class Result extends Model {
 	}
 	
 	public void setCantGV(Integer cantV){ //cambia la goles como visitante	
-		setInteger("cant_goles_visit", cantV); }
+		this.setInteger("cant_goles_visit", cantV); 
+	}
 	
 	public Integer getCantGV(){ //obtiene la cantidad de goles como visitante
 		return getInteger("cant_goles_visit");
