@@ -3,7 +3,7 @@ package prode;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.validation.ValidatorAdapter;
 
-public class ResultValidator extends ValidatorAdapter{
+public class PredictionValidator extends ValidatorAdapter{
 	
 	@Override
 	public void validate(Model m){
@@ -13,7 +13,7 @@ public class ResultValidator extends ValidatorAdapter{
 		if(te == null || te.equals("")){
 			valid = false;
 		}else{
-			if(!te.equals("empate") && !te.equals("gana_local") && !te.equals("gana_visitante") && !te.equals("no_jugado")) {
+			if(!te.equals("empate") && !te.equals("gana_local") && !te.equals("gana_visitante")) {
 				valid = false;
 			}
 		}

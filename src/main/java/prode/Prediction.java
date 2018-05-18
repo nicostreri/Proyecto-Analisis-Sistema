@@ -5,11 +5,11 @@ import org.javalite.activejdbc.validation.ValidatorAdapter;
 
 public class Prediction extends Model {
 	static{
-		//validateWith(new ResultValidator()).message("ingrese el tipo");
-		validateNumericalityOf("cant_gol_visit", "cant_gol_local","puntos_obtenidos").greaterThan(-1).onlyInteger().message("Cantidad de puntos incorrecta");
+		validateWith(new PredictionValidator()).message("ingrese el tipo");
+		validateNumericalityOf("cant_gol_visit", "cant_gol_local").greaterThan(-1).onlyInteger().message("Cantidad de puntos incorrecta");
 	}
 	public void setTipo(String nuevoTipo){ //cambia el tipo_result
-		setString("tipo_Result", nuevoTipo);
+		setString("tipo_result", nuevoTipo);
 	}
 	
 	public void setCantGV(Integer cantV){ //cambia la goles como visitante	
@@ -26,7 +26,8 @@ public class Prediction extends Model {
 		return getInteger("cant_gol_local");
 	}	
 
-	public void setPuntos(int puntos){ //modificar los puntos del usuario	
+	public void setPuntos(int puntos){ //modificar los puntos del usuario
+		if(puntos < -1) puntos = -1;
 		setInteger("puntos_obtenidos", puntos); }
 	
 	public int getPuntos(){ //obtiene los puntos dado un bet y un result
