@@ -18,22 +18,18 @@ public class Match extends Model {
 		}		
 		//Retorna el Schedule en donde se encuentra el match
 		public Schedule obtenerSchedule(){
-			Schedule temp = Schedule.findFirst("id=?", this.get("id_schedule"));
-			return temp;
+			return Schedule.findFirst("id=?", this.get("schedule_id"));
 		}		
 		//Retorna el equipo local
 		public Team obtenerTeamLocal(){
-			Team temp = Team.findFirst("id=?", this.get("id_team_local"));
-			return temp;
+			return Team.findFirst("id=?", this.get("local_team_id"));
 		}
 		//Retorna el equipo visitante
 		public Team obtenerTeamVisitante(){
-			Team temp = Team.findFirst("id=?",this.get("id_team_visitante"));
-			return temp;
+			return Team.findFirst("id=?",this.get("visitor_team_id"));			
 		}
 		//Retorna el resultado del partido
 		public Result obtenerResultado(){
-			Result temp = Result.findFirst("id=?",this.get("id_result"));
-			return temp;
+			return Result.findFirst("id=?",this.get("result_id"));
 		}		
 }
