@@ -29,7 +29,7 @@ public class BetTest {
   @Test
   public void validatePrecenseOfFechasApuestas(){
       Bet bet = new Bet();
-      bet.set("fecha_apuesta", "");
+      bet.set("bet_date", "");
 
       assertEquals(bet.isValid(), false);
   }
@@ -42,12 +42,12 @@ public class BetTest {
   @Test
   public void validacionFechasApuestasCorrectas(){
       Bet bet1 = new Bet();
-      bet1.setDate("fecha_apuesta", "2018-05-40 00:00:00"); //El dia no corresponde
+      bet1.setDate("bet_date", "2018-05-40 00:00:00"); //El dia no corresponde
 	
 			Date date1 = new Date();			
 
       Bet bet2 = new Bet();
-      bet2.setDate("fecha_apuesta",date1);
+      bet2.setDate("bet_date",date1);
 
       Bet bet3 = new Bet();
       bet3.setFecha("2018-04-10 25:33:04"); //La hora no corresponde

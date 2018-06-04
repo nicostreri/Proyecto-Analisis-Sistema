@@ -6,32 +6,32 @@ import org.javalite.activejdbc.validation.ValidatorAdapter;
 public class Prediction extends Model {
 	static{
 		validateWith(new PredictionValidator()).message("ingrese el tipo");
-		validateNumericalityOf("cant_gol_visit", "cant_gol_local").greaterThan(-1).onlyInteger().message("Cantidad de puntos incorrecta");
+		validateNumericalityOf("visit_goals", "local_goals").greaterThan(-1).onlyInteger().message("Cantidad de puntos incorrecta");
 	}
 	public void setTipo(String nuevoTipo){ //cambia el tipo_result
-		setString("tipo_result", nuevoTipo);
+		setString("type_result", nuevoTipo);
 	}
 	
 	public void setCantGV(Integer cantV){ //cambia la goles como visitante	
-		setInteger("cant_gol_visit", cantV); }
+		setInteger("visit_goals", cantV); }
 	
 	public Integer getCantGV(){ //obtiene la cantidad de goles como visitante
-		return getInteger("cant_gol_visit");
+		return getInteger("visit_goals");
 	}	
 	
 	public void setCantGL(Integer cantL){ //cambia los goles locales	
-		setInteger("cant_gol_local", cantL); }
+		setInteger("local_goals", cantL); }
 
 	public Integer getCantGL(){ //obtiene la cantidad de goles como local
-		return getInteger("cant_gol_local");
+		return getInteger("local_goals");
 	}	
 
 	public void setPuntos(int puntos){ //modificar los puntos del usuario
 		if(puntos < -1) puntos = -1;
-		setInteger("puntos_obtenidos", puntos); }
+		setInteger("points_earned", puntos); }
 	
 	public int getPuntos(){ //obtiene los puntos dado un bet y un result
-		return getInteger("puntos_obtenidos");
+		return getInteger("points_earned");
 	}	
 		
 	

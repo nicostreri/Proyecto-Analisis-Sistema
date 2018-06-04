@@ -5,16 +5,16 @@ import java.util.Date;
 
 public class Match extends Model {
 	static{
-			dateFormat("yyyy-MM-dd HH:mm:ss","fecha");//FORMATO: 'YYYY-MM-DD HH:MM:SS'
-    	validatePresenceOf("fecha").message("Ingrese fecha del match");
+			dateFormat("yyyy-MM-dd HH:mm:ss","match_date");//FORMATO: 'YYYY-MM-DD HH:MM:SS'
+    	validatePresenceOf("match_date").message("Ingrese fecha del match");
   }
 		//Almacena una fecha
 		public void setFecha(String fecha){
-				setDate("fecha",fecha);
+				setDate("match_date",fecha);
 		}
 		//Retorna una fecha de jugada en formato Date (Observar)
 		public Date getFecha(){
-			return getDate("fecha");
+			return getDate("match_date");
 		}		
 		//Retorna el Schedule en donde se encuentra el match
 		public Schedule obtenerSchedule(){

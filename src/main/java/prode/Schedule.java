@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Schedule extends Model {
 	static{
-		validatePresenceOf("nombre_fecha").message("Ingrese nombre del Equipo");
+		validatePresenceOf("date_name").message("Ingrese nombre de la fecha");
 	}
 
 	public Fixture obtenerFixturePerteneciente(){
-		Fixture temp = Fixture.findFirst("id=?", this.get("id_fixture"));
+		Fixture temp = Fixture.findFirst("id=?", this.get("fixture_id"));
 		return temp;
 	}
 
@@ -18,7 +18,7 @@ public class Schedule extends Model {
 		Retorna la lista de los Partidos que pertenen a la Fecha
 	*/
 	public List<Match> obtenerListaPartidos(){
-		List<Match> partidos = Match.find("id_schedule= ?", this.get("id"));
+		List<Match> partidos = Match.find("schedule_id= ?", this.get("id"));
 		return partidos;
 	}
 

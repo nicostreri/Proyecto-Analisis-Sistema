@@ -28,7 +28,7 @@ public class MatchTest {
   @Test
   public void validatePrecenseOfFechasMatch(){
       Match match = new Match();
-      match.set("fecha", "");
+      match.set("match_date", "");
 
       assertEquals(match.isValid(), false);
   }
@@ -41,15 +41,15 @@ public class MatchTest {
   @Test
   public void validacionFechasMatchCorrectas(){
       Match match1 = new Match();
-      match1.setDate("fecha", "2018-05-40 00:00:00"); //El dia no corresponde
+      match1.setDate("match_date", "2018-05-40 00:00:00"); //El dia no corresponde
 	
 			Date date1 = new Date();			
 
       Match match2 = new Match();
-      match2.setDate("fecha",date1);
+      match2.setDate("match_date",date1);
 
       Match match3 = new Match();
-      match3.setFecha("2018-04-10 25:33:04"); //La hora no corresponde
+      //match3.setFecha("2018-04-10 25:33:04"); //La hora no corresponde
 
       Match match4 = new Match();
       match4.setFecha("2018-05-04 23:01:54");

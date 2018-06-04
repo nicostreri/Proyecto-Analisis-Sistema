@@ -1,6 +1,6 @@
 create table matches(
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
-	fecha DATETIME,
+	match_date DATETIME,
 	schedule_id INTEGER,
 	visitor_team_id INTEGER,
 	local_team_id INTEGER,

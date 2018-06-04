@@ -27,7 +27,7 @@ public class ScheduleTest {
   @Test
   public void validatePrecenseOfName(){
       Schedule sc = new Schedule();
-      sc.set("nombre_fecha", "");
+      sc.set("date_name", "");
       assertEquals(sc.isValid(), false);
   }
 }

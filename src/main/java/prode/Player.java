@@ -22,7 +22,7 @@ public class Player extends Model {
 		List<Score> puntuacion = Score.where("username = ?", this.getUsername());
 
 		for(Score temp : puntuacion){
-			suma += (Integer)temp.get("cant_puntos");
+			suma += (Integer)temp.get("total_score");
 		}
 		return suma;	
 	}

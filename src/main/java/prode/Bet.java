@@ -6,20 +6,20 @@ import java.util.List;
 
 public class Bet extends Model {
 	 static{	
-			dateFormat("yyyy-MM-dd HH:mm:ss","fecha_apuesta");//FORMATO: 'YYYY-MM-DD HH:MM:SS'
-    	validatePresenceOf("fecha_apuesta").message("Ingrese fecha_apuesta");
+			dateFormat("yyyy-MM-dd HH:mm:ss","bet_date");//FORMATO: 'YYYY-MM-DD HH:MM:SS'
+    	validatePresenceOf("bet_date").message("Ingrese bet_date");
   	}
 		//Almacena una fecha
 		public void setFecha(String fecha){
-				setDate("fecha_apuesta",fecha);
+				setDate("bet_date",fecha);
 		}
 		//Retorna una fecha en formato Date (Observar)
 		public Date getFecha(){
-			return getDate("fecha_apuesta");
+			return getDate("bet_date");
 		}	
 		//Retorna el Schedule en el cual se realizo la apuesta
 		public Schedule obtenerSchedule(){
-			Schedule temp = Schedule.findFirst("id=?", this.get("id_schedule"));
+			Schedule temp = Schedule.findFirst("id=?", this.get("schedule_id"));
 			return temp;
 		}
 		//Retorna el Player que realizo la apuesta

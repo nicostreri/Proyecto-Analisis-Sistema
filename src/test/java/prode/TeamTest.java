@@ -27,7 +27,7 @@ public class TeamTest {
   @Test
   public void validatePrecenseOfName(){
       User user = new User();
-      user.set("nombre", "");
+      user.set("name", "");
 
       assertEquals(user.isValid(), false);
   }

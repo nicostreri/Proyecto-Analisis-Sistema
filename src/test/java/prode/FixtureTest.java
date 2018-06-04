@@ -27,11 +27,11 @@ public class FixtureTest {
   @Test
   public void validatePrecenseOfName(){
       Fixture fix = new Fixture();
-      fix.set("nombre", "");
+      fix.set("name", "");
       assertEquals(fix.isValid(), false);
 		
 			Fixture fix1 = new Fixture();
-      fix1.set("nombre", "   ");
+      fix1.set("name", "   ");
       assertEquals(fix1.isValid(), false);
 		
   }

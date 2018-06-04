@@ -30,24 +30,24 @@ public class ScoreTest {
   @Test
   public void validacionFechasMatchCorrectas(){
       Score s1 = new Score();
-      s1.set("cant_puntos", -1);
-      s1.set("partidos_acertados", -1);
+      s1.set("amount_points", -1);
+      s1.set("correct_predicted_matches", -1);
 
       Score s2 = new Score();
-      s2.set("cant_puntos", -1);
-      s2.set("partidos_acertados", 0);
+      s2.set("amount_points", -1);
+      s2.set("correct_predicted_matches", 0);
 
       Score s3 = new Score();
-      s3.set("cant_puntos", 0);
-      s3.set("partidos_acertados", 0);
+      s3.set("amount_points", 0);
+      s3.set("correct_predicted_matches", 0);
 
       Score s4 = new Score();
-      s4.set("cant_puntos", 0);
-      s4.set("partidos_acertados", -1);
+      s4.set("amount_points", 0);
+      s4.set("correct_predicted_matches", -1);
 
       Score s5 = new Score();
-      s5.set("cant_puntos", 23);
-      s5.set("partidos_acertados", 3);
+      s5.set("amount_points", 23);
+      s5.set("correct_predicted_matches", 3);
 
 
       assertEquals(s1.isValid(), false);

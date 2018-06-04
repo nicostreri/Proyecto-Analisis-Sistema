@@ -16,6 +16,6 @@ public class User extends Model {
 	Retorna el Nombre y Apellido del User de la Instancia Actual, que se encuentra almacenado en base de datos o por almacenar
   */
   public String getNombreCompleto(){
-  	return get("nombre") + " " + get("apellido");
+  	return get("name") + " " + get("lastname");
   }
 }
