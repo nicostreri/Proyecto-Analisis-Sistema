@@ -8,7 +8,7 @@ public class PredictionValidator extends ValidatorAdapter{
 	@Override
 	public void validate(Model m){
 		boolean valid = true;
-		String te = m.getString("type_result");
+		String te = m.getString("result_type");
 
 		if(te == null || te.equals("")){
 			valid = false;
