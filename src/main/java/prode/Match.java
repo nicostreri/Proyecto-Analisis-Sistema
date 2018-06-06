@@ -2,6 +2,8 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Match extends Model {
 	static{
@@ -31,5 +33,30 @@ public class Match extends Model {
 		//Retorna el resultado del partido
 		public Result obtenerResultado(){
 			return Result.findFirst("id=?",this.get("result_id"));
-		}		
+		}
+
+		public Map<String,String> getDatos(){
+			//(id,match_date,schedule_id,local_team_id,visitor_team_id,result_id)
+			Map<String,String> resp = new HashMap();
+			resp.put("id",this.getString("id"));
+			resp.put("fecha_jugada",this.getDate("match_date").toString());
+
+			//Se obtienen datos del Local
+			resp.put("id_local", this.getString("local_team_id"));
+			resp.put("name_local", Team.findById(resp.get("id_local")).getString("name"));
+
+			//Se obtienen datos del Visitante
+			resp.put("id_visitante", this.getString("visitor_team_id"));
+			resp.put("name_visitante", Team.findById(resp.get("id_visitante")).getString("name"));
+
+			//Datos sobre el Resultado
+			/*
+				Determinar el estado del resultado y agregar
+				"jugado" con true si ya se jugo, sino no agregar esa key
+
+				si esta la key "jugado", crear las de cant goles
+			*/
+			//resp.put("")
+			return resp;
+		}
 }

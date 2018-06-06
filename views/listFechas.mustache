@@ -1,0 +1,24 @@
+{{>header}}
+<div class="container" style="padding-top: 2.5rem !important;">
+    <div class="row">
+    	<h2>Fechas del Fixture {{name_fixture}}</h2>
+		<table class="table">
+		  	<thead>
+		    	<tr>
+		      		<th scope="col">#</th>
+		      		<th scope="col">Nombre</th>
+		      		<th scope="col">Opciones</th>
+		    	</tr>
+		  	</thead>
+		  	<tbody>
+		  		{{#hay_elem}}
+			    <tr>
+			      	<th scope="row">{{id}}</th>
+			      	<td>{{name}}</td>
+			      	<td><a href="../fecha/{{id}}"><div class="fa fa-eye"></div></a></td>
+			    </tr>
+		    	{{/hay_elem}}
+		  	</tbody>
+		</table>      
+    </div>
+</div>

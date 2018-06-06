@@ -2,6 +2,8 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Schedule extends Model {
 	static{
@@ -11,6 +13,13 @@ public class Schedule extends Model {
 	public Fixture obtenerFixturePerteneciente(){
 		Fixture temp = Fixture.findFirst("id=?", this.get("fixture_id"));
 		return temp;
+	}
+
+	public Map<String,String> getDatos(){
+		Map<String,String> resp = new HashMap();
+		resp.put("id",this.getString("id"));
+		resp.put("name",this.getString("date_name"));
+		return resp;
 	}
 
 
