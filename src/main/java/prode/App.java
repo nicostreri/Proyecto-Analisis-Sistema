@@ -120,6 +120,12 @@ public class App{
 	        	return null;
 	        }, new MustacheTemplateEngine()
 	    );
+
+	    post("/fecha/:id", (req,res) ->{
+	    	res.body("Guardado");
+	    	//request.body();
+	    	return null;
+	    });
  
 	    get("/fecha/:id", (req, res) -> {
 	    		//Se obtiene la Fecha con el id

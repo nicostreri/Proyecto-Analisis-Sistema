@@ -44,7 +44,7 @@
 		</table>
 		{{#posible_apostar}}
 			{{#logeado}}
-			<button type="button" class="btn btn-success">Guardar Apuesta</button>
+			<button onclick="sendVotos();" type="button" class="btn btn-success">Guardar Apuesta</button> <span id="idResp"></span>
 			{{/logeado}}
 			{{^logeado}}
 			<a class="btn btn-success" href="../../login" role="button"><i class="fas fa-user"></i>&nbsp;Ingresar para Apostar</a>
@@ -90,6 +90,20 @@
 			Funcion que se encarga de enviar la informacion al Servidor y
 				muestra la respuesta
 		*/
+		$("#idResp").html("Espere...");
+		$.ajax(window.location.href, {
+		    type: 'post',
+		    data: JSON.stringify(votos),
+		    
+		    contentType: 'application/json',
+		    success: function(data){
+		    	$("#idResp").html(data);
+		    	console.log(data);
+		    },
+		    error: function() {
+			    console.log("No se ha podido obtener la información");
+			}
+		});
 	}
 </script>
 
