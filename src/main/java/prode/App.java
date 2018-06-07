@@ -141,6 +141,9 @@ public class App{
 	    				//Para ser posible Hoy debe ser < a la Fecha del Primer Partido
 	    				if(primeraFecha.compareTo(new Date()) > 0){
 	    					respuesta.put("posible_apostar","true");
+	    					if(req.session().attribute("logeado") != null){
+	    						respuesta.put("logeado", "true");
+	    					}
 	    				} 
 	    			}
 	    			respuesta.put("hay_elem",partidos);

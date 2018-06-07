@@ -29,7 +29,11 @@
 					{{/jugado}}
 			      	
 			      	{{#posible_apostar}}
-			      		<td>AQUI TABLERO APUESTA</td>
+			      		<td><div id="{{id}}" class="btn-group" role="group" aria-label="Basic example">
+						  	<button onclick="addVoto('{{id}}',-1)" type="button" class="btn btn-default" title="Gana Local"><i class="far fa-smile"></i></button>
+						  	<button onclick="addVoto('{{id}}',0)" type="button" class="btn btn-default" title="Empate"><i class="far fa-meh"></i></button>
+						  	<button onclick="addVoto('{{id}}',1)" type="button" class="btn btn-default" title="Gana Visitante"><i class="far fa-smile"></i></button>
+						</div></td>
 			      	{{/posible_apostar}}
 			      	{{^posible_apostar}}
 			      		<td></td>
@@ -39,25 +43,54 @@
 		  	</tbody>
 		</table>
 		{{#posible_apostar}}
+			{{#logeado}}
 			<button type="button" class="btn btn-success">Guardar Apuesta</button>
+			{{/logeado}}
+			{{^logeado}}
+			<a class="btn btn-success" href="../../login" role="button"><i class="fas fa-user"></i>&nbsp;Ingresar para Apostar</a>
+			{{/logeado}}
+
 		{{/posible_apostar}}     
     </div>
 </div>
 
 <script type="text/javascript">
-	/*$(document).ready(function() {
-        var cantLocal = 0;
-        var cantVisit = 0;
+	var votos = {};
+	function addVoto(idPartido, voto){
+		/*
+			voto: -1 Gana Local, 0 Empate, +1 Gana Visitante
+		*/
+		console.log("En "+ idPartido + " voto " + voto);
+		switch(voto) {
+		    case -1:
+		        acomodarBotones(idPartido,0);
+		        break;
+		    case 0:
+		        acomodarBotones(idPartido,1);
+		        break;
+		    case 1:
+		        acomodarBotones(idPartido,2);
+		        break;
+		    default:
+		        break;
+		}
+		votos["p"+idPartido] = voto;
+	}
 
-				$(".numero").parent("tr").find("td").each(function() {
-        		if($(this).html() != "coger valores de la fila"){
-            	 valores += $(this).html() + " ";
-            }
-        });
-        
-        valores = valores + "\n";
-        alert(valores);
-    });*/
+	function acomodarBotones(idGrupo, boton){
+		var botones = $("#"+idGrupo+" .btn i");
+		for(var i=0; i<3; i++){
+			$(botones[i]).removeClass("text-success");
+		}
+		$(botones[boton]).addClass("text-success");
+	}
+
+	function sendVotos(){
+		/*
+			Funcion que se encarga de enviar la informacion al Servidor y
+				muestra la respuesta
+		*/
+	}
 </script>
 
 {{>footer}}
