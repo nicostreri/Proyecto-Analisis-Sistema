@@ -1,0 +1,30 @@
+{{>header}}
+<div class="container" style="padding-top: 2.5rem !important;">
+	<div class="row">
+		<div class="col-md-12">
+			{{#error}}
+				<div class="alert alert-danger" role="alert">
+					{{error}}
+				</div>
+			{{/error}}
+			<form action="/login" method="POST" role="form">
+				<div class="form-group">
+					<label for="username">
+						Nombre Usuario
+					</label>
+					<input type="text" class="form-control" id="username" name="username" />
+				</div>
+				<div class="form-group">
+					<label for="claveinput">
+						Clave
+					</label>
+					<input type="password" class="form-control" id="claveinput" name="claveinput" />
+				</div>
+				<button type="submit" class="btn btn-primary">
+					Ingresar
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+{{>footer}}

@@ -18,7 +18,6 @@ import spark.template.mustache.MustacheTemplateEngine;
  *
  */
 public class App{
-    
     public static void main( String[] args ){
         
         //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");
@@ -26,12 +25,64 @@ public class App{
     	port(8081);
 
     	before("*", (req, res) -> {
-    		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");	
+    		if(!Base.hasConnection()){ 
+    			Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");	
+    		}
     	});
 
 		after("*", (req, res) ->{
-		    Base.close();
+			if(Base.hasConnection()){
+				Base.close();
+			}
 		});
+
+		get("/login", (req, res) -> {
+			if(req.session().attribute("logeado") != null){
+	    		res.redirect("/perfil");
+	    		return null;
+	    	}
+	    	return new ModelAndView(null, "./views/login.mustache");
+	        }, new MustacheTemplateEngine()
+	    );
+
+	    post("/login", (req, res) -> {
+	    	//Procesamiento de Login
+	    	boolean loginCorrecto = false;
+	    	String error = "";
+	    	if(req.session().attribute("logeado") != null){
+	    		loginCorrecto = true;
+	    	}else{
+		    	
+		    	String user = req.queryParams("username");
+		    	String pass = req.queryParams("claveinput");
+		    	if(user != null && pass!= null && !user.equals("") && !pass.equals("")){
+		    		if(User.logear(user,pass)!=null){
+		    			req.session().attribute("logeado", true);
+		    			req.session().attribute("username", user);
+		    			loginCorrecto = true;
+		    		}else{
+		    			error = "Los datos son incorrectos";
+		    		}
+		    	}else{
+		    		error = "Complete todos los datos";
+		    	}
+		    }
+	    	if(loginCorrecto){
+	    		res.redirect("/perfil");
+	    	}else{
+	    		res.status(401);
+	    		Map<String,String> r = new HashMap();
+	    		r.put("error", error);
+	    		return new ModelAndView(r, "./views/login.mustache");
+	    	}
+	    	return null;
+	    }, new MustacheTemplateEngine());
+
+	    get("/salir", (req, res) -> {
+			req.session().removeAttribute("logeado");
+	    	res.redirect("/login");
+	    	return null;
+	    });
 
 		get("/", (req, res) -> {
 	    	return new ModelAndView(null, "./views/index.mustache");
