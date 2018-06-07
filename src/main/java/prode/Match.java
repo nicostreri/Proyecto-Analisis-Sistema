@@ -49,14 +49,14 @@ public class Match extends Model {
 			resp.put("id_visitante", this.getString("visitor_team_id"));
 			resp.put("name_visitante", Team.findById(resp.get("id_visitante")).getString("name"));
 
-			//Datos sobre el Resultado
-			/*
-				Determinar el estado del resultado y agregar
-				"jugado" con true si ya se jugo, sino no agregar esa key
 
-				si esta la key "jugado", crear las de cant goles
-			*/
-			//resp.put("")
+			Result tResul = Result.findById(this.getString("result_id"));
+			if(!tResul.getTipo().equals("no_jugado")){
+				//El partido ya se jugo
+				resp.put("jugado", "true");
+				resp.put("cantGolVisitante", tResul.getCantGV().toString());
+				resp.put("cantGolLocal", tResul.getCantGL().toString());
+			}
 			return resp;
 		}
 }

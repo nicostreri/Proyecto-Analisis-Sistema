@@ -33,6 +33,26 @@ public class App{
 		    Base.close();
 		});
 
+		get("/", (req, res) -> {
+	    	return new ModelAndView(null, "./views/index.mustache");
+	        }, new MustacheTemplateEngine()
+	    );
+
+		get("/fixture", (req, res) -> {
+	    	//Se obtiene los Fixtures con el id y el nombre
+	    	List<Map<String,String>> fixtures = new ArrayList();
+	    	List<Fixture> temp = Fixture.find("*");
+	    	for(Fixture t : temp){
+	    		//Por cada Fixture
+	    		fixtures.add(t.getDatos());
+	    	}
+	    	Map respuesta = new HashMap();
+	    	respuesta.put("hay_elem",fixtures);
+	    	return new ModelAndView(respuesta, "./views/listFixtures.mustache");
+
+	        }, new MustacheTemplateEngine()
+	    );
+
 	    get("/fixture/:id", (req, res) -> {
 	    		//Se obtiene el Fixture con el id
 	    		Fixture temp = Fixture.findById(req.params(":id"));
@@ -55,18 +75,23 @@ public class App{
 	    		Schedule temp = Schedule.findById(req.params(":id"));
 	    		if(temp != null){
 	    			List<Map<String,String>> partidos = new ArrayList();
+	    			boolean primera = true;
+	    			Date primeraFecha = null;
 	    			for(Match t : temp.obtenerListaPartidos()){
+	    				if(primera){
+	    					primeraFecha = t.getFecha();
+	    					primera = false;
+	    				}
 	    				partidos.add(t.getDatos());
 	    			}
 	    			Map respuesta = new HashMap();
-/*
-	AQUI
-		respuesta.put("posible_apostar", true or false);
-
-		Determinar si es posible o no apostar los resultados de esta fecha
-*/
-
-
+	    			if(!primera){
+	    				//Existe al menos un partido en la fecha, vemos si es posible apostar
+	    				//Para ser posible Hoy debe ser < a la Fecha del Primer Partido
+	    				if(primeraFecha.compareTo(new Date()) > 0){
+	    					respuesta.put("posible_apostar","true");
+	    				} 
+	    			}
 	    			respuesta.put("hay_elem",partidos);
 	    			respuesta.put("name_fecha",temp.getString("date_name"));
 	    			return new ModelAndView(respuesta, "./views/listPartidos.mustache");

@@ -1,6 +1,8 @@
 package prode;
 import org.javalite.activejdbc.Model;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Fixture extends Model{
 	static{
@@ -17,5 +19,12 @@ public class Fixture extends Model{
 		//List<Player> temp = this.getAll(Player.class);
 		//return temp;
 		return this.getAll(Player.class);
+	}
+
+	public Map<String,String> getDatos(){
+		Map<String,String> resp = new HashMap();
+		resp.put("id",this.getString("id"));
+		resp.put("name",this.getString("name"));
+		return resp;
 	}
 }

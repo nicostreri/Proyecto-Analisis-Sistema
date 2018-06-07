@@ -27,7 +27,7 @@ public class Schedule extends Model {
 		Retorna la lista de los Partidos que pertenen a la Fecha
 	*/
 	public List<Match> obtenerListaPartidos(){
-		List<Match> partidos = Match.find("schedule_id= ?", this.get("id"));
+		List<Match> partidos = Match.find("schedule_id= ?", this.get("id")).orderBy("match_date asc");
 		return partidos;
 	}
 
