@@ -1,0 +1,49 @@
+{{>header}}
+<div class="container" style="padding-top: 2.5rem !important;">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card border-secondary mb-3">
+			  	<div class="card-header">Perfil de usuario</div>
+					<div class="card-body">
+			    	<h4 class="card-title">Datos del usuario</h4>
+						<p class="card-text">
+							<hr/>
+							<span class="font-weight-bold"> Usuario: </span> {{username}}
+							<br/>
+							<span class="font-weight-bold"> Nombre: </span> {{nombre_apellido}}
+							<br/>
+							<br/>
+							<h4> Puntuacion por fixture </h4>
+							<table class="table">
+									<thead>
+										<tr>
+												<th scope="col">#</th>
+												<th scope="col">Fecha</th>
+												<th scope="col">Fixture</th>
+												<th scope="col">Puntuacion</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{#hay_elem}}
+										<tr>
+												<th scope="row">{{id}}</th>
+												<td>{{name_fecha}}</td>
+												<td>{{name_fix}}</td>
+												<td>{{point}}</td>
+										</tr>
+										{{/hay_elem}}
+									</tbody>
+							</table>	
+											
+							
+							<a href="../../salir" class="btn btn-primary">
+									Cerrar sesion
+							</a>
+					</p>
+			  	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{>footer}}

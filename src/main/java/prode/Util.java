@@ -41,7 +41,7 @@ public class Util{
 	}
 
 	//public static String apuestaValida(JSONObject apuesta, String idFecha){
-	//public static boolean apuestaValida(JSONObject apuesta, String idFecha){
+	public static String apuestaValida(JSONObject apuesta, String idFecha){
 		String[] partidosApostados = JSONObject.getNames(apuesta);
 		//Se obtienen los partidos asociados a la fecha
 
@@ -51,7 +51,7 @@ public class Util{
 
 		//Se registran las apuestas
 
-
+		return null;
 
 		
 	}

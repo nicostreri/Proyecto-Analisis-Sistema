@@ -1,0 +1,44 @@
+{{>header}}
+<div class="container" style="padding-top: 2.5rem !important;">
+    <div class="page-header">
+        <h2>Registro</h2>
+    </div>
+    <p class="lead">Registrate en <b>Prode</b></p>
+    <p>Completa los siguientes campos para continuar:</p>
+    <div class="row">
+    <div class="col-md-12">
+        <form action="/registro" method="post">
+        	<div class="row font-weight-bold">
+	            <div class="col-md-6" style="margin-top:5px;">
+					<label>Nombre</label>
+					<input class="form-control" placeholder="Nombre" type="text" id="nombre" name="nombre" required>
+	            </div>
+	            <div class="col-md-6" style="margin-top:5px;">
+	                <label>Apellido</label>
+	                <input class="form-control" placeholder="Apellido" type="text" id="apellido" name="apellido" required>
+	            </div>
+	        </div>
+            <div class="row font-weight-bold" style="margin-top:5px;">
+                <label>Usuario</label>
+                <input class="form-control" placeholder="Usuario" type="text" name="usuario" id="usuario_registro" maxlength="128" required>
+            </div>
+            <div class="row font-weight-bold">
+                <div class="col-md-6" style="margin-top:5px;">
+                    <label>Contraseña</label>
+                    <input class="form-control" placeholder="Ingrese contraseña" type="password" id="pwd1" name="pwd1" required >
+                </div>
+                <div class="col-md-6" style="margin-top:5px;">
+                    <label class="hidden-xs">Confirmar Contraseña</label>
+                    <input class="form-control" placeholder="Contraseña" type="password" id="pwd2" name="pwd2" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" style="margin-top:5px;">
+                    <button type="submit" id="btn_submit" class="btn btn-success hidden-xs">Registrarse</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+{{>footer}}
