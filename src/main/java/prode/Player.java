@@ -3,6 +3,8 @@ package prode;
 import org.javalite.activejdbc.Model;
 import java.util.List;
 
+import org.javalite.activejdbc.annotations.*;
+@IdName("username")
 public class Player extends Model {
 	static{
 		validatePresenceOf("username").message("Ingrese el nombre del usuario");

@@ -11,7 +11,7 @@ import java.util.Map;
 
 import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
-
+import org.json.*;
 
 /**
  * Hello world!
@@ -37,7 +37,7 @@ public class App{
 		});
 
 		get("/login", (req, res) -> {
-			if(req.session().attribute("logeado") != null){
+			if(Util.userLogeado(req)){
 	    		res.redirect("/perfil");
 	    		return null;
 	    	}
@@ -49,7 +49,7 @@ public class App{
 	    	//Procesamiento de Login
 	    	boolean loginCorrecto = false;
 	    	String error = "";
-	    	if(req.session().attribute("logeado") != null){
+	    	if(Util.userLogeado(req)){
 	    		loginCorrecto = true;
 	    	}else{
 		    	
@@ -122,8 +122,29 @@ public class App{
 	    );
 
 	    post("/fecha/:id", (req,res) ->{
-	    	res.body("Guardado");
-	    	//request.body();
+	    	/*
+				Pasos para lograr una apuesta
+				-Debe Existir un Usuario Logeado
+				-Validar si es una Fecha Abierta para Apuestas
+				-El Usuario debe estar suscripto al Fixture al q pertenece la Fecha
+				-Determinar si se cargo un resultado para cada partido de la fecha
+				-Crear la Apuesta y Generar una prediccion por cada resultado de partido
+	    	*/
+			if(Util.fechaAbierta(req.params(":id"))){
+				if(Util.userLogeado(req)){
+					Schedule temp = Schedule.findById(req.params(":id"));
+					if(Util.userSuscripto(req.session().attribute("username"), temp.obtenerFixturePerteneciente().getString("id"))){
+						JSONObject obj = new JSONObject(req.body());
+						res.body(Util.apuestaValida(obj,req.params(":id")));
+					}else{
+						res.body("Error: Debe estar suscripto al Fixture.");
+					}
+				}else{
+					res.body("Error: Debe ingresar al Sistema.");
+				}
+			}else{
+				res.body("Error: Esta fecha esta bloqueada.");
+			}
 	    	return null;
 	    });
  
@@ -147,7 +168,7 @@ public class App{
 	    				//Para ser posible Hoy debe ser < a la Fecha del Primer Partido
 	    				if(primeraFecha.compareTo(new Date()) > 0){
 	    					respuesta.put("posible_apostar","true");
-	    					if(req.session().attribute("logeado") != null){
+	    					if(Util.userLogeado(req)){
 	    						respuesta.put("logeado", "true");
 	    					}
 	    				} 

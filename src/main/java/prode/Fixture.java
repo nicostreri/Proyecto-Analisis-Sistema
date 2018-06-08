@@ -1,9 +1,11 @@
 package prode;
+import org.javalite.activejdbc.*;
 import org.javalite.activejdbc.Model;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-
+import org.javalite.activejdbc.annotations.*;
+@Many2Many(other = Player.class, join = "players_fixtures", sourceFKName = "fixture_id", targetFKName = "player_username")
 public class Fixture extends Model{
 	static{
 		validatePresenceOf("name").message("Ingrese el nombre del fixture");

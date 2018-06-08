@@ -1,7 +1,8 @@
 package prode;
 
 import org.javalite.activejdbc.Model;
-
+import org.javalite.activejdbc.annotations.*;
+@Table("players_fixtures")
 public class PlayersFixtures extends Model {
 	
 	
