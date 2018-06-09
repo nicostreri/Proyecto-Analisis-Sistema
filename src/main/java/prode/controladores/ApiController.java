@@ -31,5 +31,17 @@ public class ApiController{
 	    res.body(resp.toString());
 	    return null;
 	};
+    
+    //Obtiene los partidos pertenecientes a un Schedule
+	public static Route listarPartido = (req, res) -> {
+		List<Match> tempM = Match.find("schedule_id= ?",req.params(":idFecha"));
+		JSONArray resp = new JSONArray();
+	    for(Match t : tempM){
+	    	//Por cada Match
+	    	resp.put(new JSONObject(t.getDatos()));
+	    }
+	    res.body(resp.toString());
+	    return null;
+	};
 	
 }
