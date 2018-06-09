@@ -26,9 +26,14 @@ public class App{
 		get("/fixture", FixtureController.listarTodosFixtures, new MustacheTemplateEngine());
 	    get("/fixture/:id",FixtureController.listarFechasDeFixture, new MustacheTemplateEngine());
 
+	    get("/admin/cargarResultado", AdminController.cargarResultado, new MustacheTemplateEngine());
+
 
 	    //Routers Api
 	    get("/api/fixture", ApiController.listarFixture);
+	    get("/api/fixture/:idFix", ApiController.listarFecha);
+	    get("/api/fecha/:idFecha", ApiController.listarPartido);
+	    post("/api/partido/:idPartido/resultado", ApiController.cargarResultado);
 
     	//Control de  Exceptions
     	exception(Exception.class, (exception, request, response) -> {

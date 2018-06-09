@@ -1,0 +1,89 @@
+{{>header}}
+<div class="container" style="padding-top: 2.5rem !important;">
+	<div class="row">
+		<div class="col-md-12">
+		    <div class="form-group">
+			  	<label for="sel1">Seleccione Fixture:</label>
+				<select class="form-control" id="fixtures">
+				</select>
+			</div>
+			<div class="form-group">
+			  	<label for="sel1">Seleccione Fecha:</label>
+				<select class="form-control" id="fechas">
+				</select>
+			</div>
+			<div class="form-group">
+			  	<label for="sel1">Seleccione Partido:</label>
+				<select class="form-control" id="partidos">
+				</select>
+			</div>
+
+			<div class="form-inline">
+				<form id="formDatos" class="form-inline">
+					<div class="form-group">
+					    <label for="localGol">Local: </label>
+					    <input type="text" class="form-control" id="localGol" name="cantL" maxlength="3">
+					</div>
+				  	<div class="form-group mx-sm-3">
+				    	<label for="visitGol">Visitante: </label>
+				    	<input type="text" class="form-control" id="visitGol" name="cantV" maxlength="3">
+				  	</div>
+				</form>
+			  	<button class="btn btn-primary">Guardar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function() {
+  		//Se cargan los Fixtures
+  		cargarDatos($("#fixtures"),"../api/fixture");
+  		$("#fixtures").change(function(){
+  			cargarDatos($("#fechas"), "../api/fixture/"+$("#fixtures").val());
+		});
+
+		$("#fechas").change(function(){
+  			cargarDatos($("#partidos"), "../api/fecha/"+$("#fechas").val(), true);
+		});
+	});
+
+	function cargarDatos(elem, url, isPartido = false){
+		$.ajax(url, {
+		    type: 'get',
+		    success: function(data){
+		    	elem.html("");
+		    	elem.append($('<option>', { 
+				        value: -1,
+				        text : "SELECCIONE OPCION" 
+				}));
+		    	$.each(data, function (i, item) {
+		    		if(isPartido && item.jugado == "true"){
+		    			return;
+		    		}
+				    elem.append($('<option>', { 
+				        value: item.id,
+				        text : (!isPartido)?(item.name):(item.fecha_jugada + " Local:" + item.name_local + " - Visitante: "+ item.name_visitante)
+				    }));
+				});
+		    },
+		    error: function() {
+			    console.log("No se ha podido obtener la información");
+			}
+		});
+	}
+
+	function send(){
+		$.ajax("../../api/partido/" + $("#partidos").val() + "/resultado", {
+		    type: 'post',
+		    data: $("#formDatos").serialize(),
+		    success: function(data){
+		    	console.log(data);
+		    },
+		    error: function() {
+			    console.log("No se ha podido obtener la información");
+			}
+		});
+	}
+</script>
+
+{{>footer}}

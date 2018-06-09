@@ -17,6 +17,7 @@ public class ApiController{
 	    	resp.put(new JSONObject(t.getDatos()));
 	    }
 	    res.body(resp.toString());
+	    res.type("application/json");
 	    return null;
 	};
 	
@@ -29,6 +30,7 @@ public class ApiController{
 	    	resp.put(new JSONObject(t.getDatos()));
 	    }
 	    res.body(resp.toString());
+	    res.type("application/json");
 	    return null;
 	};
     
@@ -41,7 +43,38 @@ public class ApiController{
 	    	resp.put(new JSONObject(t.getDatos()));
 	    }
 	    res.body(resp.toString());
+	    res.type("application/json");
 	    return null;
+	};
+
+	public static Route cargarResultado = (req, res) ->{
+		Match temp = Match.findById(req.params(":idPartido"));
+		Result tR = temp.obtenerResultado();
+		Integer cantV;
+		Integer cantL;
+		try{
+			cantV = Integer.valueOf(req.queryParams("cantV"));
+			cantL = Integer.valueOf(req.queryParams("cantL"));
+		}catch (Exception e) {
+			return null;
+		}
+		tR.setCantGV(cantV);
+		tR.setCantGL(cantL);
+		String tipo = "gana_local";
+		if(cantL.intValue() == cantV.intValue()){
+			tipo = "empate";
+		}else if(cantL.intValue() < cantV.intValue()){
+			tipo = "gana_visitante";
+		}
+		tR.setTipo(tipo);
+		tR.saveIt();
+		res.body("ok");
+		return null;
+
+		/*
+			NOTA: Si es el ultimo partido de la fecha.
+			Calcular la Fecha
+		*/
 	};
 	
 }
