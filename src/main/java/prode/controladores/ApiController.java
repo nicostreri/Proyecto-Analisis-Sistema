@@ -19,4 +19,17 @@ public class ApiController{
 	    res.body(resp.toString());
 	    return null;
 	};
+	
+	//Obtiene las fechas pertenecientes a un Fixture
+	public static Route listarFecha = (req, res) -> {
+		List<Schedule> temp = Schedule.find("fixture_id= ?",req.params(":idFix"));
+		JSONArray resp = new JSONArray();
+	    for(Schedule t : temp){
+	    	//Por cada Schedule
+	    	resp.put(new JSONObject(t.getDatos()));
+	    }
+	    res.body(resp.toString());
+	    return null;
+	};
+	
 }
