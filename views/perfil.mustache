@@ -1,49 +1,113 @@
 {{>header}}
 <div class="container" style="padding-top: 2.5rem !important;">
-	<div class="row">
+	<div class="row ">
 		<div class="col-md-12">
-			<div class="card border-secondary mb-3">
-			  	<div class="card-header">Perfil de usuario</div>
-					<div class="card-body">
+			<div class="card border-secondary h-100">
+			  	<div class="card-header">Perfil de usuario
+							<a href="../protegido/fixture" class="btn btn-primary" style="float: right;">
+									Mis Fixtures
+							</a>			
+					</div>
+				<div class="card-body">
 			    	<h4 class="card-title">Datos del usuario</h4>
 						<p class="card-text">
-							<hr/>
+							<hr align="left" width="30%">
 							<span class="font-weight-bold"> Usuario: </span> {{username}}
+							<br/>
 							<br/>
 							<span class="font-weight-bold"> Nombre: </span> {{nombre_apellido}}
 							<br/>
-							<br/>
-							<h4> Puntuacion por fixture </h4>
-							<table class="table">
-									<thead>
-										<tr>
-												<th scope="col">#</th>
-												<th scope="col">Fecha</th>
-												<th scope="col">Fixture</th>
-												<th scope="col">Puntuacion</th>
-										</tr>
-									</thead>
-									<tbody>
-										{{#hay_elem}}
-										<tr>
-												<th scope="row">{{id}}</th>
-												<td>{{name_fecha}}</td>
-												<td>{{name_fix}}</td>
-												<td>{{point}}</td>
-										</tr>
-										{{/hay_elem}}
-									</tbody>
-							</table>	
-											
-							
+							<hr align="left" width="30%">
+
+							<div class="container">
+							<style>
+                .table {
+                    width:48%;
+               			 position: absolute;
+			              top: 38%;		                    
+                    left:50%;
+                  }
+								tbody {
+								    display:block;
+								    height:140px;
+								    overflow:auto;
+								    width:100%;
+								}
+								thead, tbody tr {
+								    display:table;
+								    width:100%;
+								    table-layout:fixed;
+								}
+								thead {
+								    width: calc( 100% - 1em )
+								}
+								.titulo{
+									  position:absolute;
+                    top:23%;
+                    left:50%;
+									}
+							</style>
+							<h4 class="titulo">Puntuaciones por fechas</h4>
+								    <table class="table" >	
+								        <thead>
+								            <tr>
+								                <td>#</td>
+								                <td>Fixture</td>
+								                <td>Fecha</td>
+								                <td>Puntuacion</td>
+								            </tr>
+								        </thead>
+								        <tbody>
+                       {{#hay_elem}}
+													<tr>
+													<th scope="row">{{id}}</th>
+													<td>{{name_fecha}}</td>
+													<td>{{name_fix}}</td>
+													<td>{{point}}</td>
+													</tr>
+												{{/hay_elem}}
+								         <tr>
+								            <th scope="row">1</th>
+								            <td>Rusia2018</td>
+								            <td>FECHA 1</td>
+								            <td>32</td>
+								         </tr>
+								         <tr>
+								            <th scope="row">2</th>
+								            <td>Rusia2018</td>
+								            <td>FECHA 1</td>
+								            <td>32</td>
+								         </tr>
+								         <tr>
+								            <th scope="row">3</th>
+								            <td>Rusia2018</td>
+								            <td>FECHA 1</td>
+								            <td>32</td>
+								         </tr>
+								         <tr>
+								            <th scope="row">5</th>
+								            <td>Rusia2018</td>
+								            <td>FECHA 1</td>
+								            <td>32</td>
+								         </tr>
+								         <tr>
+								            <th scope="row">5</th>
+								            <td>Rusia2018</td>
+								            <td>FECHA 1</td>
+								            <td>32</td>
+								         </tr>
+								        </tbody>
+								    </table>
+								</div>
+
 							<a href="../../salir" class="btn btn-primary">
 									Cerrar sesion
 							</a>
-					</p>
+						</p>
 			  	</div>
-				</div>
 			</div>
 		</div>
 	</div>
 </div>
 {{>footer}}
+
