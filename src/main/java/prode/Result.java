@@ -8,7 +8,7 @@ public class Result extends Model {
 	static{
 		//validateWith(new ResultValidator()).message("ingrese el tipo"); //valida el tipo TResult
 		validatePresenceOf("result_type").message("Ingrese tipo de resultado");
-		validateNumericalityOf("visit_goals", "local_goals").greaterThan(-1).onlyInteger().message("Cantidad de puntos incorrecta");
+		validateNumericalityOf("visit_goals", "local_goals").greaterThan(-1).onlyInteger().message("Cantidad de Goles incorrecta");
 	}
 	public String getTipo(){
 		return getString("result_type");	

@@ -70,11 +70,6 @@ public class ApiController{
 		tR.saveIt();
 		res.body("ok");
 		return null;
-
-		/*
-			NOTA: Si es el ultimo partido de la fecha.
-			Calcular la Fecha
-		*/
 	};
 	
 }
