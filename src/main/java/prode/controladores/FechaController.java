@@ -40,6 +40,10 @@ public class FechaController{
 	    return null;
 	};
 
+  public static TemplateViewRoute listarMisFixture = (req, res) -> {
+    return null;
+  };  
+
 	public static Route apostarFecha = (req,res) ->{
 	    /*
 			Pasos para lograr una apuesta
