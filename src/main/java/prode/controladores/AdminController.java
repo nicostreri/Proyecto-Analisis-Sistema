@@ -8,7 +8,7 @@ import java.util.*;
 import org.json.*;
 
 public class AdminController{
-	public static TemplateViewRoute cargarResultado = (req, res) -> {
-		return new ModelAndView(null, "./views/cargaResultado.mustache");
+	public static TemplateViewRoute mainAdmin = (req, res) -> {
+		return new ModelAndView(null, "./views/admin.mustache");
 	};
 }

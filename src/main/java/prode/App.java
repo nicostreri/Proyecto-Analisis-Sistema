@@ -26,7 +26,7 @@ public class App{
 		get("/fixture", FixtureController.listarTodosFixtures, new MustacheTemplateEngine());
 	    get("/fixture/:id",FixtureController.listarFechasDeFixture, new MustacheTemplateEngine());
 
-	    get("/admin", AdminController.cargarResultado, new MustacheTemplateEngine());
+	    get("/admin", AdminController.mainAdmin, new MustacheTemplateEngine());
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());
 
 	    //Routers Api
