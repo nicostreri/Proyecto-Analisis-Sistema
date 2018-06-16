@@ -18,7 +18,7 @@ public class ResultValidator extends ValidatorAdapter{
 			}
 		}
 		if(!valid)
-         		m.addValidator(this, "enum_error");				
+         	m.addValidator(this, "enum_error");				
 	}	
 }
 
