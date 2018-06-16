@@ -21,8 +21,21 @@ public class FixtureController{
 	};
 
      public static TemplateViewRoute listarMisFixture = (req, res) -> {
-    return null;
-    };    
+        List<Map<String,String>> fixSus = new ArrayList();
+        List<Map<String,String>> fixNoSus = new ArrayList();
+        List<Fixture> temp = Fixture.find("*");
+        for(Fixture t : temp){
+           if(Util.userSuscripto(req.session().attribute("username"),t.getString("id"))){
+              fixSus.add(t.getDatos());
+           }else{
+              fixNoSus.add(t.getDatos());            
+           }
+        }
+        Map respuesta = new HashMap();
+        respuesta.put("hay_elem_fixSus",fixSus);
+        respuesta.put("hay_elem_fixNoSus",fixNoSus);
+        return new ModelAndView(respuesta, "./views/listFixturesSus.mustache");
+     };    
 
 	public static TemplateViewRoute listarFechasDeFixture =  (req, res) -> {
 	    //Se obtiene el Fixture con el id
