@@ -20,6 +20,10 @@ public class FixtureController{
 	    return new ModelAndView(respuesta, "./views/listFixtures.mustache");
 	};
 
+     public static TemplateViewRoute listarMisFixture = (req, res) -> {
+    return null;
+    };    
+
 	public static TemplateViewRoute listarFechasDeFixture =  (req, res) -> {
 	    //Se obtiene el Fixture con el id
 	    Fixture temp = Fixture.findById(req.params(":id"));

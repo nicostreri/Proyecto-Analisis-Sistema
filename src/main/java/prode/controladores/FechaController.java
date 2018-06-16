@@ -38,11 +38,7 @@ public class FechaController{
 	    	return new ModelAndView(respuesta, "./views/listPartidos.mustache");
 	    }
 	    return null;
-	};
-
-  public static TemplateViewRoute listarMisFixture = (req, res) -> {
-    return null;
-  };  
+	};  
 
 	public static Route apostarFecha = (req,res) ->{
 	    /*
