@@ -29,4 +29,8 @@ public class Fixture extends Model{
 		resp.put("name",this.getString("name"));
 		return resp;
 	}
+
+    public String getName(){
+        return this.getString("name");
+    }
 }

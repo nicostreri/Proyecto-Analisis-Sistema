@@ -21,11 +21,17 @@ public class Player extends Model {
 	public Integer  getPoint(){ //obtengo la cantidad de puntos totales
 		Integer suma = 0;
 		
-		List<Score> puntuacion = Score.where("username = ?", this.getUsername());
+		List<Score> puntuacion = Score.where("username_player= ?", this.getUsername());
 
 		for(Score temp : puntuacion){
 			suma += (Integer)temp.get("total_score");
 		}
 		return suma;	
 	}
+
+    public List<Score> obtenerListaScores(){
+        List<Score> scores = Score.find("username_player= ?", this.getUsername());
+        return scores;
+    }
+    
 }

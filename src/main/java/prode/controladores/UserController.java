@@ -56,10 +56,28 @@ public class UserController {
 	};
 
 	public static TemplateViewRoute perfil = (req, res) -> {
-		User temp = User.findById(req.session().attribute("username"));
+    List<Map<String,String>> datos = new ArrayList();
+    String userName=req.session().attribute("username");
+		User tempUser = User.findById(userName);
+    Player tempPlayer = Player.findById(userName);
+    List<Score> tempScores = tempPlayer.obtenerListaScores();
+    int i = 1;
+    for(Score s : tempScores){
+      Map<String,String> tempDatos = new HashMap();
+      Bet tempBet = s.obtenerBet();
+      Schedule tempSchedule = tempBet.obtenerSchedule();
+      Fixture tempFixture = tempSchedule.obtenerFixturePerteneciente();  
+      tempDatos.put("id",Integer.toString(i));
+      tempDatos.put("name_fecha",tempSchedule.getFecha());
+      tempDatos.put("name_fix",tempFixture.getName());
+      tempDatos.put("point",s.getPoints());
+      datos.add(tempDatos);      
+      i++;
+    }   
 		Map respuesta = new HashMap();
-		respuesta.put("username",temp.getUsername());
-		respuesta.put("nombre_apellido",temp.getNombreCompleto());
+    respuesta.put("hay_elem",datos);
+		respuesta.put("username",tempUser.getUsername());
+		respuesta.put("nombre_apellido",tempUser.getNombreCompleto());
 		return new ModelAndView(respuesta, "./views/perfil.mustache");
 	};
 }

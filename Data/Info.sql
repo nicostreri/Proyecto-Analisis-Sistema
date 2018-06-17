@@ -73,3 +73,20 @@ insert into matches (id,match_date,schedule_id,local_team_id,visitor_team_id,res
 (23,'2018-07-23',5,5,8,23),
 (24,'2018-07-24',5,5,9,24),
 (25,'2018-07-25',5,5,10,25);
+
+insert into users (username,name,lastname,password) values ('user123','UserNombre','UserApellido','123');
+
+insert into players (username,total_score) values 
+('user123',0);
+
+-- Controlar que se pueden crear apuestas sin que el usuario este suscrito al fixture
+
+insert into players_fixtures (player_username,fixture_id) values
+('user123',1);
+
+insert into bets (bet_date,schedule_id,username_player) values
+('2018-04-02',1,'user123');
+
+insert into scores (amount_points,correct_predicted_matches,username_player,bet_id) values
+(10,3,'user123',1);
+

@@ -22,6 +22,9 @@ public class Schedule extends Model {
 		return resp;
 	}
 
+    public String getFecha(){
+        return this.getString("date_name");
+    }    
 
 	/*
 		Retorna la lista de los Partidos que pertenen a la Fecha

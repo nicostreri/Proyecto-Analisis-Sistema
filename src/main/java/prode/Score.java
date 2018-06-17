@@ -2,6 +2,8 @@ package prode;
 
 import org.javalite.activejdbc.Model;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Score extends Model {
 
@@ -18,4 +20,13 @@ public class Score extends Model {
 		List<Prediction> predicciones = Prediction.find("score_id= ?", this.get("id"));
 		return predicciones;
 	}
+    
+    public Bet obtenerBet(){
+        return Bet.findFirst("id= ?",this.get("bet_id"));
+    }
+    
+    public String getPoints(){
+        return this.getString("amount_points");
+    }
+
 }
