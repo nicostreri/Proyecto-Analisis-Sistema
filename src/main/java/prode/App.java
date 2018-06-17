@@ -28,6 +28,7 @@ public class App{
 
 	    get("/admin", AdminController.mainAdmin, new MustacheTemplateEngine());
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());
+        post("/protegido/misfixture",FixtureController.suscribirPlayerFixture);
 
 	    //Routers Api
 	    get("/api/fixture", ApiController.listarFixture);

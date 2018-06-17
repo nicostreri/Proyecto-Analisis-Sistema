@@ -52,4 +52,26 @@ public class FixtureController{
 		}
 		return null;
 	};
+    
+    public static Route suscribirPlayerFixture = (req,res)->{
+        String usernamePlayer = req.session().attribute("username");
+        //String temp = req.params(":idFix");
+        //System.out.println("Test: "+temp);
+        String idFixture;
+        try{
+            idFixture = req.queryParams("idFix");
+        }catch (Exception e){
+            return null;        
+        }
+        System.out.println("Fix: "+idFixture);
+        if(Util.userSuscripto(usernamePlayer,idFixture)){
+            res.body("El usuario ya esta suscrito");
+            return null;
+        }else{
+            PlayersFixtures.createIt("player_username", usernamePlayer,"fixture_id",idFixture);
+        }
+        res.body("no problem");
+        return null;
+    };
+
 }

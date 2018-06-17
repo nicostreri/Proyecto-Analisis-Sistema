@@ -8,8 +8,9 @@
         </div>
         <div class="panel-body">
           <div class="row">
-            <div class="col-md-6 pre-scrollable">
+            <div class="col-md-6">
 							<h5 class="titulo">Fixtures disponibles</h5>
+                  <div class="pre-scrollable" style="max-height:50vh">
 								    <table class="table" >	
 								        <thead>
 								            <tr>
@@ -23,16 +24,18 @@
 													<tr>
 													<th scope="row">{{id}}</th>
 													<td>{{name}}</td>
-													<td><a href="./fixture/{{id}}">
-                          <div class="fa fa-check-circle"></div>Suscribirse
-                          </a></td>
+													<td>
+                          <button class="btn btn-primary" onclick="sendResultado('{{id}}');"><div class="fa fa-check-circle"></div> Suscribirse</button>
+                          </td>
 													</tr>
 												{{/hay_elem_fixNoSus}}
 								        </tbody>
 								    </table>
                   </div>
-              <div class="col-md-6 pre-scrollable">
+               </div>
+              <div class="col-md-6">
 							<h5 class="tituloSus">Fixtures suscritos</h5>
+                  <div class="pre-scrollable" style="max-height:50vh">
 								    <table class="table" >	
 								        <thead>
 								            <tr>
@@ -50,10 +53,30 @@
 								        </tbody>
 								    </table>
                 </div>
+               </div>
           </div>
         </div>
         </div>
       </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+	function sendResultado(idFix){
+		$.ajax("../protegido/misfixture", {
+		    type: 'post',
+		    data: $(idFix).serialize(),
+		    success: function(data){
+		    	console.log(data);
+		    	alert("Estado: "+ data);
+		    },
+		    error: function() {
+			    alert("Error al guardar datos ");
+			}
+		});
+	}
+
+</script>
+
 {{>footer}}
