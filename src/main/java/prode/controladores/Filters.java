@@ -23,4 +23,11 @@ public class Filters{
 	    	halt(401, "Ingrese al Sistema antes de continuar.");
 	    }
 	};
+
+	public static Filter seccionAdmin = (request, response) -> {
+	    if(request.session().attribute("isAdmin") == null){
+	    	halt(401, "Ingrese como Administrador antes de continuar.");
+	    }
+	};
+
 }

@@ -3,6 +3,105 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="card border-secondary mb-3">
+				<div class="card-header">Creacion de Fixture</div>
+				<div class="card-body">
+					<p class="card-text">
+						<div class="form-inline">
+							<form id="formDatosNuevoFixture" class="form-inline">
+								<div class="form-group">
+								    <label for="nombreFixture">Nombre: </label>
+								    <input type="text" class="form-control" id="nombreFixture" name="nombreFixture" maxlength="128">
+								</div>
+							</form>
+						  	<button class="btn btn-primary" onclick="sendNuevoFixture();">Crear</button>
+						</div>		
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card border-secondary mb-3">
+				<div class="card-header">Creacion de Equipo</div>
+				<div class="card-body">
+					<p class="card-text">
+						<div class="form-inline">
+							<form id="formDatosNuevoEquipo" class="form-inline">
+								<div class="form-group">
+								    <label for="nombreEquipo">Nombre: </label>
+								    <input type="text" class="form-control" id="nombreEquipo" name="nombreEquipo" maxlength="128">
+								</div>
+							</form>
+						  	<button class="btn btn-primary" onclick="sendNuevoEquipo();">Crear</button>
+						</div>		
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="card border-secondary mb-3">
+				<div class="card-header">Creacion de Fecha</div>
+				<div class="card-body">
+					<p class="card-text">
+						<div class="form-group">
+						  	<label for="entidad">Seleccione Fixture Padre:</label>
+							<select class="form-control" id="fixPadre">
+							</select>
+						</div>
+						<div class="form-inline">
+							<form id="formDatosNuevaFecha" class="form-inline">
+								<div class="form-group">
+								    <label for="nombreFecha">Nombre Fecha: </label>
+								    <input type="text" class="form-control" id="nombreFecha" name="nombreFecha" maxlength="128">
+								</div>
+							</form>
+						  	<button class="btn btn-primary" onclick="sendNuevaFecha();">Crear</button>
+						</div>		
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card border-secondary mb-3">
+				<div class="card-header">Creacion de Partido</div>
+				<div class="card-body">
+					<p class="card-text">
+						<div class="form-group">
+						  	<label for="fixFechaPadre">Seleccione Fixture:</label>
+							<select class="form-control" id="fixFechaPadre">
+							</select>
+						</div>
+						<div class="form-group">
+							<form id="formDatosNuevoPartido">
+								<div class="form-group">
+								  	<label for="fechaPadrePart">Seleccione Fecha:</label>
+									<select class="form-control" id="fechaPadrePart" name="fechaPadrePart">
+									</select>
+								</div>
+								<div class="form-group">
+								  	<label for="equipoLocal">Local: </label>
+									<select class="form-control" id="equipoLocal" name="equipoLocal">
+									</select>
+								</div>
+								<div class="form-group">
+								  	<label for="equipoVisitante">Visitante: </label>
+									<select class="form-control" id="equipoVisitante" name="equipoVisitante">
+									</select>
+								</div>
+								<div class="form-group">
+								  	<label for="partidoFecha">Se juega: </label>
+									<input type="date" class="form-control" id="partidoFecha" name="partidoFecha">
+								</div>
+							</form>
+						  	<button class="btn btn-primary" onclick="sendNuevoPartido();">Guardar</button>
+						</div>		
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card border-secondary mb-3">
 				<div class="card-header">Carga de Resultado</div>
 				<div class="card-body">
 					<p class="card-text">
@@ -21,45 +120,14 @@
 							<select class="form-control" id="partidos">
 							</select>
 						</div>
-						<div class="form-inline">
-							<form id="formDatos" class="form-inline">
-								<div class="form-group">
-								    <label for="localGol">Local: </label>
-								    <input type="number" class="form-control" id="localGol" name="cantL" maxlength="3">
-								</div>
-							  	<div class="form-group mx-sm-3">
-							    	<label for="visitGol">Visitante: </label>
-							    	<input type="number" class="form-control" id="visitGol" name="cantV" maxlength="3">
-							  	</div>
-							</form>
-						  	<button class="btn btn-primary" onclick="sendResultado();">Guardar</button>
-						</div>		
-					</p>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="card border-secondary mb-3">
-				<div class="card-header">Creacion de Entidades</div>
-				<div class="card-body">
-					<p class="card-text">
 						<div class="form-group">
-						  	<label for="entidad">Seleccione Tipo:</label>
-							<select class="form-control" id="entidad">
-								<option value="fixture">Fixture</option>
-								<option value="fecha">Fecha</option>
-								<option value=""></option>
-							</select>
-						</div>
-
-						<div class="form-inline">
-							<form id="formDatos" class="form-inline">
+							<form id="formDatos">
 								<div class="form-group">
-								    <label for="localGol">Local: </label>
+								    <label for="localGol">Cant Goles Local: </label>
 								    <input type="number" class="form-control" id="localGol" name="cantL" maxlength="3">
 								</div>
-							  	<div class="form-group mx-sm-3">
-							    	<label for="visitGol">Visitante: </label>
+							  	<div class="form-group">
+							    	<label for="visitGol">Cant Goles Visitante: </label>
 							    	<input type="number" class="form-control" id="visitGol" name="cantV" maxlength="3">
 							  	</div>
 							</form>
@@ -76,17 +144,26 @@
 <script type="text/javascript">
 	$(function() {
   		//Se cargan los Fixtures
-  		cargarDatosPartidos($("#fixtures"),"../api/fixture");
+  		cargarDatosSelect($("#fixtures"),"../api/fixture");
+  		cargarDatosSelect($("#fixPadre"),"../api/fixture");
+  		cargarDatosSelect($("#fixFechaPadre"),"../api/fixture");
+  		cargarDatosSelect($("#equipoLocal"),"../api/equipo");
+  		cargarDatosSelect($("#equipoVisitante"),"../api/equipo");
+
   		$("#fixtures").change(function(){
-  			cargarDatosPartidos($("#fechas"), "../api/fixture/"+$("#fixtures").val());
+  			cargarDatosSelect($("#fechas"), "../api/fixture/"+$("#fixtures").val());
+		});
+
+		$("#fixFechaPadre").change(function(){
+  			cargarDatosSelect($("#fechaPadrePart"), "../api/fixture/"+$("#fixFechaPadre").val());
 		});
 
 		$("#fechas").change(function(){
-  			cargarDatosPartidos($("#partidos"), "../api/fecha/"+$("#fechas").val(), true);
+  			cargarDatosSelect($("#partidos"), "../api/fecha/"+$("#fechas").val(), true);
 		});
 	});
 
-	function cargarDatosPartidos(elem, url, isPartido = false){
+	function cargarDatosSelect(elem, url, isPartido = false){
 		$.ajax(url, {
 		    type: 'get',
 		    success: function(data){
@@ -118,6 +195,71 @@
 		    success: function(data){
 		    	console.log(data);
 		    	alert("Estado: "+ data);
+		    },
+		    error: function() {
+			    alert("Error al guardar datos");
+			}
+		});
+	}
+
+	function sendNuevaFecha(){
+		$.ajax("../../api/fixture/" + $("#fixPadre").val() + "/fecha", {
+		    type: 'post',
+		    data: $("#formDatosNuevaFecha").serialize(),
+		    success: function(data){
+		    	console.log(data);
+		    	alert("Estado: "+ data);
+		    	//Clear Form
+		    	cargarDatosSelect($("#fixPadre"),"../api/fixture");
+		    	$("#formDatosNuevaFecha")[0].reset();
+		    },
+		    error: function() {
+			    alert("Error al guardar datos");
+			}
+		});
+	}
+
+	function sendNuevoFixture(){
+		$.ajax("../../api/fixture", {
+		    type: 'post',
+		    data: $("#formDatosNuevoFixture").serialize(),
+		    success: function(data){
+		    	console.log(data);
+		    	alert("Estado: "+ data);
+		    	//Clear Form
+		    	$("#formDatosNuevoFixture")[0].reset();
+		    },
+		    error: function() {
+			    alert("Error al guardar datos");
+			}
+		});
+	}
+
+	function sendNuevoEquipo(){
+		$.ajax("../../api/equipo", {
+		    type: 'post',
+		    data: $("#formDatosNuevoEquipo").serialize(),
+		    success: function(data){
+		    	console.log(data);
+		    	alert("Estado: "+ data);
+		    	//Clear Form
+		    	$("#formDatosNuevoEquipo")[0].reset();
+		    },
+		    error: function() {
+			    alert("Error al guardar datos");
+			}
+		});
+	}
+
+	function sendNuevoPartido(){
+		$.ajax("../../api/partido", {
+		    type: 'post',
+		    data: $("#formDatosNuevoPartido").serialize(),
+		    success: function(data){
+		    	console.log(data);
+		    	alert("Estado: "+ data);
+		    	//Clear Form
+		    	$("#formDatosNuevoPartido")[0].reset();
 		    },
 		    error: function() {
 			    alert("Error al guardar datos");

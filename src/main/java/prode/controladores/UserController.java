@@ -26,6 +26,12 @@ public class UserController {
 		    	if(User.logear(user,pass)!=null){
 		    		req.session().attribute("logeado", true);
 		    		req.session().attribute("username", user);
+
+		    		//Se determina si es un usuario Administrador
+		    		if(Administrator.findById(user) != null){
+		    			req.session().attribute("isAdmin", true);
+		    		}
+
 		    		loginCorrecto = true;
 		    	}else{
 		    		error = "Los datos son incorrectos";
@@ -47,6 +53,7 @@ public class UserController {
 
 	public static Route salir = (Request req,Response res) -> {
 		req.session().removeAttribute("logeado");
+		req.session().removeAttribute("isAdmin");
 	    res.redirect("/login");
 	    return null;
 	};

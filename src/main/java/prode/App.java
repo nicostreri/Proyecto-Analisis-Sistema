@@ -14,6 +14,8 @@ public class App{
     	before("*", Filters.preGeneral);
 		after("*", Filters.posGeneral);
 		before("/protegido/*", Filters.seccionProtegida);
+		before("/api/*", Filters.seccionAdmin);
+		before("/admin", Filters.seccionAdmin);
 		get("/", GeneralController.index, new MustacheTemplateEngine());
 		get("/registro", UserController.registrar, new MustacheTemplateEngine());
 		get("/login",UserController.loginForm, new MustacheTemplateEngine());
@@ -31,10 +33,15 @@ public class App{
         post("/protegido/misfixture",FixtureController.suscribirPlayerFixture);
 
 	    //Routers Api
+	    get("/api/equipo", ApiController.listarEquipos);
 	    get("/api/fixture", ApiController.listarFixture);
 	    get("/api/fixture/:idFix", ApiController.listarFecha);
+	    post("/api/fixture", ApiController.nuevoFixture);
 	    get("/api/fecha/:idFecha", ApiController.listarPartido);
 	    post("/api/partido/:idPartido/resultado", ApiController.cargarResultado);
+	    post("/api/fixture/:idFix/fecha", ApiController.nuevaFecha);
+	    post("/api/equipo", ApiController.nuevoEquipo);
+	    post("/api/partido", ApiController.nuevoPartido);
 
     	//Control de  Exceptions
     	exception(Exception.class, (exception, request, response) -> {

@@ -71,5 +71,85 @@ public class ApiController{
 		res.body("ok");
 		return null;
 	};
+
+	public static Route nuevaFecha = (req, res) ->{
+		Fixture temp = Fixture.findById(req.params(":idFix"));
+		String nombreFecha = req.queryParams("nombreFecha");
+		if(temp != null && nombreFecha != null){
+			Schedule nF = new Schedule();
+			nF.setParent(temp);
+			nF.setString("date_name",nombreFecha);
+			nF.saveIt();
+			res.body("Creado con Exito");
+		}
+		return null;
+	};
+
+	public static Route nuevoFixture = (req, res) ->{
+		String nombreFix = req.queryParams("nombreFixture");
+		if(nombreFix != null){
+			Fixture tF = new Fixture();
+			tF.setString("name", nombreFix);
+			tF.saveIt();
+			res.body("Creado con Exito");
+		}
+		return null;
+	};
+
+	public static Route nuevoEquipo = (req, res) ->{
+		String nombreEquipo = req.queryParams("nombreEquipo");
+		if(nombreEquipo != null){
+			Team tT = new Team();
+			tT.setString("name", nombreEquipo);
+			tT.saveIt();
+			res.body("Creado con Exito");
+		}
+		return null;
+	};
 	
+	public static Route listarEquipos = (req, res) -> {
+		//Se obtiene los Fixtures con el id y el nombre
+	    List<Team> temp = Team.find("*");
+	    JSONArray resp = new JSONArray();
+	    for(Team t : temp){
+	    	//Por cada Fixture
+	    	resp.put(new JSONObject(t.getDatos()));
+	    }
+	    res.body(resp.toString());
+	    res.type("application/json");
+	    return null;
+	};
+
+	public static Route nuevoPartido = (req, res) ->{
+		String local = req.queryParams("equipoLocal");
+		String visit = req.queryParams("equipoVisitante");
+		String fecha = req.queryParams("partidoFecha");
+		String fId 	 = req.queryParams("fechaPadrePart");
+
+		if(local != null && visit != null && fecha != null && fId !=null && !local.equals(visit)){
+			Team tL = Team.findById(local);
+			Team tV = Team.findById(visit);
+			Schedule f = Schedule.findById(fId);
+			fecha += " 00:00:00";
+			if(tL != null && tV != null){
+				//Los equipos existen y son distintos
+				Result result = new Result();
+				result.setTipo("no_jugado");
+				result.setCantGV(0);
+				result.setCantGL(0);
+				result.saveIt();
+
+				Match partido = new Match();
+				partido.setFecha(fecha);
+				partido.setInteger("visitor_team_id", tV.getId());
+				partido.setInteger("local_team_id", tL.getId());
+				partido.setInteger("result_id", result.getId());
+				partido.setInteger("schedule_id", f.getId());
+				partido.saveIt();
+				res.body("Guardado con exito");
+				return null;
+			}
+		}
+		return null;
+	};
 }
