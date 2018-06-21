@@ -69,7 +69,7 @@ public class FechaController{
 						if(betRea != null){
 							res.body("Error: Ya aposto a la fecha");
 						}else{
-							Util.registrarApuesta(obj, idFecha)
+							Util.registrarApuesta(obj, idFecha, req.session().attribute("username"));
 							
 							res.body("Apuesta registrada.");
 						}

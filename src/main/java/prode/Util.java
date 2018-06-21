@@ -74,21 +74,38 @@ public class Util{
 	/**
 	 * @pre apuestaValida(apuesta, idFecha) == TRUE
 	 */
-	public static String registrarApuesta(JSONObject apuesta, String idFecha){
+	public static String registrarApuesta(JSONObject apuesta, String idFecha, String user){
 		Bet nueva = new Bet();
 		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");String s = formatter.format(new Date());
 		nueva.setFecha(s);
 		nueva.setString("schedule_id",idFecha);
-		nueva.setString("username_player",req.session().attribute("username"));
+		nueva.setString("username_player",user);
 		nueva.saveIt();
 
 		//Se guarda la apuesta a cada partido
 		Iterator<String> it = apuesta.keys();
 		while(it.hasNext()){
 			//Por cada Resultado Apostado, se crea una predicion
-			String idPart = apuesta.getString(it.next()).substring(1);
+			//String idPart = apuesta.getString(it.next()).substring(1);
+			String key = it.next();
+			String idPart = key.substring(1);
+			String apu = apuesta.getString(idPart);
 			Prediction pNew = new Prediction();
-
+			pNew.setTipo(obtenerTipo(apu));
+			pNew.saveIt();
+			BetsResults bR = new BetsResults();
+			bR.setInteger("bet_id", nueva.getId());
+			bR.setString("result_id", idPart);
+			bR.setParent(pNew);
+			bR.saveIt();
 		}
+		return "";
+	}
+
+	private static String obtenerTipo(String t){
+		if(t.equals("-1"))return "gana_local";
+		if(t.equals("0"))return "empate";
+		if(t.equals("1"))return "gana_visitante";
+		return null;
 	}
 }
