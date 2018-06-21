@@ -70,16 +70,19 @@ public class UserController {
     List<Score> tempScores = tempPlayer.obtenerListaScores();
     int i = 1;
     for(Score s : tempScores){
-      Map<String,String> tempDatos = new HashMap();
-      Bet tempBet = s.obtenerBet();
-      Schedule tempSchedule = tempBet.obtenerSchedule();
-      Fixture tempFixture = tempSchedule.obtenerFixturePerteneciente();  
-      tempDatos.put("id",Integer.toString(i));
-      tempDatos.put("name_fecha",tempSchedule.getFecha());
-      tempDatos.put("name_fix",tempFixture.getName());
-      tempDatos.put("point",s.getPoints());
-      datos.add(tempDatos);      
-      i++;
+      if(Integer.valueOf(s.getPoints()) >= 0 ){
+          Map<String,String> tempDatos = new HashMap();
+          Bet tempBet = s.obtenerBet();
+          Schedule tempSchedule = tempBet.obtenerSchedule();
+          Fixture tempFixture = tempSchedule.obtenerFixturePerteneciente();  
+          tempDatos.put("num",Integer.toString(i));
+          tempDatos.put("name_fecha",tempSchedule.getFecha());
+          tempDatos.put("name_fix",tempFixture.getName());
+          tempDatos.put("point",s.getPoints());
+          tempDatos.put("id_score",s.getId());
+          datos.add(tempDatos);      
+          i++;
+      }
     }   
 		Map respuesta = new HashMap();
     respuesta.put("hay_elem",datos);
@@ -87,4 +90,37 @@ public class UserController {
 		respuesta.put("nombre_apellido",tempUser.getNombreCompleto());
 		return new ModelAndView(respuesta, "./views/perfil.mustache");
 	};
+
+    public static TemplateViewRoute listarPartidosApostados = (req,res) ->{
+      Score tempScore = Score.findById(req.params(":id"));
+      Bet tempBet = tempScore.obtenerBet();
+      String idBet = tempBet.getString("id");
+      Schedule tempSchedule = tempBet.obtenerSchedule();           
+      List<Map<String,String>> datos = new ArrayList(); 
+      if(tempSchedule != null){
+        List<Match> tempMatch = tempSchedule.obtenerListaPartidos();
+        for(Match m : tempMatch){
+            Result tempResult = m.obtenerResultado();
+            if(tempResult.getString("result_type")!= "no_jugado"){
+              String idResult= tempResult.getString("id");
+              BetsResults tempBetResult = BetsResults.findByCompositeKeys(idBet,idResult);
+              if(tempBetResult != null ){
+                Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
+                Map<String,String> tempDatos = m.getDatos();
+                tempDatos.put("apuesta",tempPrediction.getResult());
+                if(tempPrediction.getHit()!="0"){//Acerto
+                  tempDatos.put("result","Acerto");
+                }else{
+                  tempDatos.put("result","No Acerto");      
+                }
+                datos.add(tempDatos);
+            }
+          }
+        }        
+      }
+      Map respuesta = new HashMap();
+      respuesta.put("fecha_name",tempSchedule.getString("date_name"));
+      respuesta.put("hay_elem",datos);
+      return new ModelAndView(respuesta,"./views/listPartidosApostados.mustache");
+    };
 }

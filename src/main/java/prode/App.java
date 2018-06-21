@@ -29,6 +29,7 @@ public class App{
 	    get("/fixture/:id",FixtureController.listarFechasDeFixture, new MustacheTemplateEngine());
 
 	    get("/admin", AdminController.mainAdmin, new MustacheTemplateEngine());
+        get("/protegido/fechaApostada/:id",UserController.listarPartidosApostados, new MustacheTemplateEngine());
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());
         post("/protegido/misfixture",FixtureController.suscribirPlayerFixture);
 

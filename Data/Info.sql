@@ -90,3 +90,9 @@ insert into bets (bet_date,schedule_id,username_player) values
 insert into scores (amount_points,correct_predicted_matches,username_player,bet_id) values
 (10,3,'user123',1);
 
+insert into predictions (id,result_type,hit,score_id) values 
+(1,'gana_local',1,1);
+ 
+insert into bets_results (bet_id,result_id,prediction_id) values
+(1,1,1);
+

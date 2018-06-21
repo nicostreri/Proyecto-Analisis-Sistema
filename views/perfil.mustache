@@ -10,7 +10,7 @@
 					</div>
 				<div class="card-body">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
 			      	<h4 class="card-title">Datos del usuario</h4>
 							  <hr align="left" width="50%">
 							  <span class="font-weight-bold"> Usuario: </span> {{username}}
@@ -23,7 +23,7 @@
 									Cerrar sesion
 							</a>
              </div>
-							<div class="col-md-6">
+							<div class="col-md-7">
 							<h4 class="titulo">Puntuaciones por fechas</h4>
                   <div class="pre-scrollable" style="max-height:40vh">
 								    <table class="table" >	
@@ -33,15 +33,17 @@
 								                <td>Fecha</td>
 								                <td>Fixture</td>
 								                <td>Puntuacion</td>
+                                <th scope="col">Opciones</th>
 								            </tr>
 								        </thead>
 								        <tbody>
                        {{#hay_elem}}
 													<tr>
-													<th scope="row">{{id}}</th>
+													<th scope="row">{{num}}</th>
 													<td>{{name_fecha}}</td>
 													<td>{{name_fix}}</td>
 													<td>{{point}}</td>
+                          <td><a href="../protegido/fechaApostada/{{id_score}}"><div class="fa fa-eye"></div></a></td>
 													</tr>
 												{{/hay_elem}}
 								        </tbody>

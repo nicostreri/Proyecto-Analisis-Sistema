@@ -14,4 +14,13 @@ public class Prediction extends Model {
 	public void setHit(Boolean h){
 		setBoolean("hit", h);
 	}
+
+    public String getResult(){
+        return this.getString("result_type");
+    }
+
+    public String getHit(){
+        return this.getString("hit");
+    }
+
 }
