@@ -11,11 +11,7 @@ public class Prediction extends Model {
 		setString("result_type", nuevoTipo);
 	}
 	
-	public void setPuntos(int puntos){ //modificar los puntos del usuario
-		if(puntos < -1) puntos = -1;
-		setInteger("points_earned", puntos); }
-	
-	public int getPuntos(){ //obtiene los puntos dado un bet y un result
-		return getInteger("points_earned");
+	public void setHit(Boolean h){
+		setBoolean("hit", h);
 	}
 }

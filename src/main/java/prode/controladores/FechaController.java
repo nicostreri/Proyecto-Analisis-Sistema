@@ -7,6 +7,7 @@ import org.javalite.activejdbc.Base;
 import java.util.*;
 import org.json.*;
 
+
 public class FechaController{
 	public static TemplateViewRoute listarPartidosDeFecha = (req, res) -> {
 	    //Se obtiene la Fecha con el id
@@ -48,11 +49,35 @@ public class FechaController{
 			-Determinar si se cargo un resultado para cada partido de la fecha
 			-Crear la Apuesta y Generar una prediccion por cada resultado de partido
 	    */
-		if(Util.fechaAbierta(req.params(":id"))){
-			Schedule temp = Schedule.findById(req.params(":id"));
+		String idFecha = req.params(":id");
+		if(Util.fechaAbierta(idFecha)){
+			Schedule temp = Schedule.findById(idFecha);
 			if(Util.userSuscripto(req.session().attribute("username"), temp.obtenerFixturePerteneciente().getString("id"))){
-				JSONObject obj = new JSONObject(req.body());
-				res.body(Util.apuestaValida(obj,req.params(":id")));
+				res.body("JJ");
+				JSONObject obj = null;
+				try{
+					obj = new JSONObject(req.body());
+				}catch (Exception e) {
+					res.body("Error: El cuerpo de la Peticion es incorrecto.");
+					res.status(400);	
+				}
+				if(obj != null){
+					if(Util.apuestaValida(obj,idFecha)){
+						res.body("TODO I");
+						//El usuario ya aposto??
+						Bet betRea = Bet.findFirst("schedule_id=? and username_player=?", idFecha, req.session().attribute("username"));
+						if(betRea != null){
+							res.body("Error: Ya aposto a la fecha");
+						}else{
+							Util.registrarApuesta(obj, idFecha)
+							
+							res.body("Apuesta registrada.");
+						}
+					}else{
+						res.body("Error: La apuesta no es correcta.");
+						res.status(400);
+					}
+				}
 			}else{
 				res.body("Error: Debe estar suscripto al Fixture.");
 			}

@@ -90,18 +90,16 @@
 			Funcion que se encarga de enviar la informacion al Servidor y
 				muestra la respuesta
 		*/
-		$("#idResp").html("Espere...");
-		$.ajax(window.location.href, {
+		$.ajax("../../protegido"+window.location.pathname, {
 		    type: 'post',
 		    data: JSON.stringify(votos),
 		    
 		    contentType: 'application/json',
 		    success: function(data){
-		    	$("#idResp").html(data);
-		    	console.log(data);
+		    	alert(data);
 		    },
-		    error: function() {
-			    console.log("No se ha podido obtener la información");
+		    error: function (jqXHR, exception) {
+			    alert(jqXHR.responseText);
 			}
 		});
 	}

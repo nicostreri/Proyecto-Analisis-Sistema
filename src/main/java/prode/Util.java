@@ -2,6 +2,9 @@ package prode;
 import java.util.*;
 import spark.*;
 import org.json.*;
+import java.text.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import static spark.Spark.*;
 public class Util{
@@ -40,19 +43,52 @@ public class Util{
 		return false;
 	}
 
-	//public static String apuestaValida(JSONObject apuesta, String idFecha){
-	public static String apuestaValida(JSONObject apuesta, String idFecha){
+	public static boolean apuestaValida(JSONObject apuesta, String idFecha){
 		String[] partidosApostados = JSONObject.getNames(apuesta);
 		//Se obtienen los partidos asociados a la fecha
+		Schedule fecha = Schedule.findById(idFecha);
+		if(fecha == null)return false;
+		List<Match> partidos = fecha.obtenerListaPartidos();
 
+		//Se determina si se dio una apuesta valida para cada partido
+		for(Match ec : partidos){
+			String key = "p" + ec.getString("id");
+			if(!pertenece(partidosApostados, key))return false;
+			int estado = -2;
+			try{
+				estado = apuesta.getInt(key);
+			}catch (Exception e){}
+			if(estado<-1 || estado>1)return false;
+		}
+		return true;		
+	}
 
-		//Se determina si se dio una apusta valida para cada partido
+	private static boolean pertenece(String[] elems, String e){
+		if(elems==null)return false;
+		for(String a : elems){
+			if(a.equals(e))return true;
+		}
+		return false;
+	}
 
+	/**
+	 * @pre apuestaValida(apuesta, idFecha) == TRUE
+	 */
+	public static String registrarApuesta(JSONObject apuesta, String idFecha){
+		Bet nueva = new Bet();
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");String s = formatter.format(new Date());
+		nueva.setFecha(s);
+		nueva.setString("schedule_id",idFecha);
+		nueva.setString("username_player",req.session().attribute("username"));
+		nueva.saveIt();
 
-		//Se registran las apuestas
+		//Se guarda la apuesta a cada partido
+		Iterator<String> it = apuesta.keys();
+		while(it.hasNext()){
+			//Por cada Resultado Apostado, se crea una predicion
+			String idPart = apuesta.getString(it.next()).substring(1);
+			Prediction pNew = new Prediction();
 
-		return null;
-
-		
+		}
 	}
 }
