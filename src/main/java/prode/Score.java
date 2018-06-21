@@ -28,5 +28,9 @@ public class Score extends Model {
     public String getPoints(){
         return this.getString("amount_points");
     }
+    
+    public String getId(){
+        return this.getString("id");        
+    }
 
 }
