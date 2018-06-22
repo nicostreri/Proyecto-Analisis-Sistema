@@ -32,6 +32,8 @@ public class App{
         get("/protegido/fechaApostada/:id",UserController.listarPartidosApostados, new MustacheTemplateEngine());
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());
         post("/protegido/misfixture",FixtureController.suscribirPlayerFixture);
+      get("/protegido/apuestas",UserController.listarApuestasSinCalcular,new MustacheTemplateEngine());
+      get("/protegido/apuestas/:id_bet",UserController.listarPredicciones,new MustacheTemplateEngine());  
 
 	    //Routers Api
 	    get("/api/equipo", ApiController.listarEquipos);

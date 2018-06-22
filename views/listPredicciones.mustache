@@ -1,7 +1,7 @@
 {{>header}}
 <div class="container" style="padding-top: 2.5rem !important;">
     <div class="row">
-      <h2>Mis Apuestas</h2><small class="text-muted">(3 puntos por resultado acertado)</small>
+      <h2>Apuestas Realizadas {{fecha_name}}</h2>
 		<table class="table">
 		  	<thead>   
            <tr>
@@ -9,22 +9,19 @@
 		      		<th scope="col">Local</th>
 		      		<th scope="col">Visitante</th>
 		      		<th scope="col">Apuesta</th>
-              <th scope="col">Resultado</th>
 		    	</tr>
         </thead>
 		  	<tbody> 
           {{#hay_elem}}
 			    <tr>
             <td>{{fecha_jugada}}</td>
-            <td>{{name_local}}&nbsp;({{cantGolLocal}})</td>
-			      <td>{{name_visitante}}&nbsp;({{cantGolVisitante}})</td>
+            <td>{{name_local}}</td>
+			      <td>{{name_visitante}}</td>
             <td>{{apuesta}}</td>
-            <td>{{result}}</td>
           </tr>
 		    	{{/hay_elem}}
         </tbody>
-		</table>
-    
+		</table>  
     </div>
 </div>
 {{>footer}}

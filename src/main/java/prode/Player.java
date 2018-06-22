@@ -34,4 +34,9 @@ public class Player extends Model {
         return scores;
     }
     
+    public List<Bet> obtenerListaBets(){
+        List<Bet> bets = Bet.find("username_player= ?", this.getUsername());
+        return bets;
+    }
+    
 }

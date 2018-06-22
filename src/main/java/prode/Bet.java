@@ -32,4 +32,9 @@ public class Bet extends Model {
 			List<Result> temp = this.getAll(Result.class);
 			return temp;
 		}
+    
+    public Score obtenerScore(){
+      return Score.findFirst("bet_id=?",this.get("id"));
+    }
+        
 }
