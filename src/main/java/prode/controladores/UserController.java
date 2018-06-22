@@ -88,6 +88,7 @@ public class UserController {
     respuesta.put("hay_elem",datos);
 		respuesta.put("username",tempUser.getUsername());
 		respuesta.put("nombre_apellido",tempUser.getNombreCompleto());
+    respuesta.put("punt_total",Integer.toString(tempPlayer.getPoint()));
 		return new ModelAndView(respuesta, "./views/perfil.mustache");
 	};
 

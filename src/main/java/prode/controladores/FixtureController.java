@@ -53,6 +53,51 @@ public class FixtureController{
 		return null;
 	};
     
+    public static TemplateViewRoute listarGanadoresDeFixture = (req,res) -> {
+      String idFix=req.params(":id");
+      Fixture tempFixture = Fixture.findById(idFix);
+      List<Map<String,String>> datos = new ArrayList();
+      //if(Util.fixtureCerrado(idFix)){
+        List<Player> tempPlayerGanadores = new ArrayList();
+        List<Player> tempPlayers = tempFixture.obtenerListaPlayer();
+        int maxPunt=0;
+        for(Player p : tempPlayers){
+          List<Score> tempScore = p.obtenerListaScores();
+          int auxPunt=0;
+          for(Score s : tempScore){
+            Bet tempBet = s.obtenerBet();
+            Schedule tempSchedule = tempBet.obtenerSchedule();
+            Fixture auxFixture = tempSchedule.obtenerFixturePerteneciente();
+            if(auxFixture.getString("id").equals(idFix)){
+              auxPunt+= s.getPoints();
+            }
+          }  
+          if(auxPunt >= maxPunt){
+              if(auxPunt > maxPunt){
+                tempPlayerGanadores.clear();
+                tempPlayerGanadores.add(p);
+                maxPunt=auxPunt;
+              }else{
+                tempPlayerGanadores.add(p);
+              }
+          }
+        }
+        int i = 1;
+        for(Player pa : tempPlayerGanadores){
+            Map<String,String> tempDatos = new HashMap();
+            tempDatos.put("num",Integer.toString(i));
+            tempDatos.put("username",pa.getUsername());
+            tempDatos.put("punt_total",Integer.toString(maxPunt));
+            datos.add(tempDatos);
+            i++;
+        }        
+    //}   
+      Map respuesta = new HashMap();
+      respuesta.put("fix_name",tempFixture.getName());
+      respuesta.put("hay_elem",datos);
+      return new ModelAndView(respuesta,"./views/listPlayersGanadoresFix.mustache");  
+    };    
+
     public static Route suscribirPlayerFixture = (req,res)->{
         String usernamePlayer = req.session().attribute("username");
         String idFixture = req.queryParams("idFix");

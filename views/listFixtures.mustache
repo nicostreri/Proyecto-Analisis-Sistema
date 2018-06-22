@@ -8,6 +8,7 @@
 		      		<th scope="col">#</th>
 		      		<th scope="col">Nombre</th>
 		      		<th scope="col">Opciones</th>
+              <th scope="col">Ganador del Fixture</th>
 		    	</tr>
 		  	</thead>
 		  	<tbody>
@@ -16,6 +17,10 @@
 			      	<th scope="row">{{id}}</th>
 			      	<td>{{name}}</td>
 			      	<td><a href="./fixture/{{id}}"><div class="fa fa-eye"></div></a></td>
+              <td><a href="./fixture/{{id}}/ganadores"><div class="fa fa-users"></div>
+                   Usuarios                
+                  </a>
+              </td>
 			    </tr>
 		    	{{/hay_elem}}
 		  	</tbody>

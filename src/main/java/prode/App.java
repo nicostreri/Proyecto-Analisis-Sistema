@@ -27,7 +27,7 @@ public class App{
 	    post("/protegido/fecha/:id", FechaController.apostarFecha);
 		get("/fixture", FixtureController.listarTodosFixtures, new MustacheTemplateEngine());
 	    get("/fixture/:id",FixtureController.listarFechasDeFixture, new MustacheTemplateEngine());
-
+        get("/fixture/:id/ganadores",FixtureController.listarGanadoresDeFixture, new MustacheTemplateEngine());
 	    get("/admin", AdminController.mainAdmin, new MustacheTemplateEngine());
         get("/protegido/fechaApostada/:id",UserController.listarPartidosApostados, new MustacheTemplateEngine());
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());

@@ -1,0 +1,25 @@
+{{>header}}
+<div class="container" style="padding-top: 2.5rem !important;">
+    <div class="row">
+    	<h2>Fixture {{fix_name}}</h2>
+		<table class="table">
+		  	<thead>
+		    	<tr>
+		      		<th scope="col">#</th>
+		      		<th scope="col">Nombre de Usuario</th>
+		      		<th scope="col">Puntuacion total obtenida</th>
+		    	</tr>
+		  	</thead>
+		  	<tbody>
+		  		{{#hay_elem}}
+			    <tr>
+			      	<th scope="row">{{num}}</th>
+			      	<td>{{username}}</td>
+              <td>{{punt_total}}</td>
+			    </tr>
+		    	{{/hay_elem}}
+		  	</tbody>
+		</table>      
+    </div>
+</div>
+{{>footer}}
