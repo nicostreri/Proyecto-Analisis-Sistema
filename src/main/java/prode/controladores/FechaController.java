@@ -115,7 +115,7 @@ public class FechaController{
 								Result re = r.getResult();
 								boolean hit = p.getTipo().equals(re.getTipo());
 								if(hit){
-									puntos += 3;
+									puntos += 10; //Puntos por partido Acertado
 									cantPartidosAcertados++;
 								}
 								p.set("score_id", scoreObtenido.getId());
