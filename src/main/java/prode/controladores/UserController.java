@@ -78,7 +78,7 @@ public class UserController {
           tempDatos.put("num",Integer.toString(i));
           tempDatos.put("name_fecha",tempSchedule.getFecha());
           tempDatos.put("name_fix",tempFixture.getName());
-          tempDatos.put("point",s.getPoints());
+          tempDatos.put("point",s.getPoints().toString());
           tempDatos.put("id_score",s.getId());
           datos.add(tempDatos);      
           i++;
@@ -107,7 +107,7 @@ public class UserController {
               if(tempBetResult != null ){
                 Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
                 Map<String,String> tempDatos = m.getDatos();
-                tempDatos.put("apuesta",tempPrediction.getResult());
+                tempDatos.put("apuesta",tempPrediction.getTipo());
                 if(tempPrediction.getHit()!="0"){//Acerto
                   tempDatos.put("result","Acerto");
                 }else{

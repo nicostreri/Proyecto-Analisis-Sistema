@@ -53,7 +53,6 @@ public class FechaController{
 		if(Util.fechaAbierta(idFecha)){
 			Schedule temp = Schedule.findById(idFecha);
 			if(Util.userSuscripto(req.session().attribute("username"), temp.obtenerFixturePerteneciente().getString("id"))){
-				res.body("JJ");
 				JSONObject obj = null;
 				try{
 					obj = new JSONObject(req.body());
@@ -69,9 +68,7 @@ public class FechaController{
 						if(betRea != null){
 							res.body("Error: Ya aposto a la fecha");
 						}else{
-							Util.registrarApuesta(obj, idFecha, req.session().attribute("username"));
-							
-							res.body("Apuesta registrada.");
+							res.body(Util.registrarApuesta(obj, idFecha, req.session().attribute("username")));
 						}
 					}else{
 						res.body("Error: La apuesta no es correcta.");
@@ -85,5 +82,72 @@ public class FechaController{
 			res.body("Error: Esta fecha esta bloqueada.");
 		}
 	    return null;
+	};
+
+	/**
+     * Calculas las Apuestas realizadas a una Fecha. Le otroga los puntos correspondientes a cada User que aposto
+	 */
+	public static Route calcularFecha = (req, res) -> {
+		String idFecha = req.params(":idFecha");
+		Base.openTransaction();
+		try{
+			if(idFecha != null){
+				Schedule f = Schedule.findById(idFecha);
+				if(Util.fechaCerrada(f)){
+					if(!f.getBoolean("calculated")){
+						//La fecha No fue calculada y ademas tiene todos sus partidos con un resultado cargado
+						// se procede a Calcular las Apuestas a esta fecha y entregar los correspondientes puntos a sus jugadores
+						List<Match> part = f.obtenerListaPartidos();
+						List<Bet> listaApuestas = Bet.find("schedule_id= ? ",f.getId());
+						for(Bet ec : listaApuestas){
+							//Por cada apuesta realizada
+							Score scoreObtenido = new Score(); 
+							scoreObtenido.setPoints(0);
+							scoreObtenido.setPartidosHit(0);
+							scoreObtenido.saveIt();
+							int puntos = 0;
+							int cantPartidosAcertados = 0;
+							List<BetsResults> results = BetsResults.find("bet_id = ? ", ec.getId());
+
+							for(BetsResults r : results){
+								//Comparo el Resultado con la Apuesta
+								Prediction p = r.getPrediction();
+								Result re = r.getResult();
+								boolean hit = p.getTipo().equals(re.getTipo());
+								if(hit){
+									puntos += 3;
+									cantPartidosAcertados++;
+								}
+								p.set("score_id", scoreObtenido.getId());
+								//p.setParent(scoreObtenido);
+								p.setHit(hit);
+								p.saveIt();
+							}
+							if(cantPartidosAcertados == results.size())puntos += 500; //Bonus: Acerto toda la Fecha
+							if(cantPartidosAcertados != results.size() && cantPartidosAcertados >= (50*results.size())/100)puntos+=200; //Bonus: Acertar mas o igual a la Mitad de los Partidos
+
+							scoreObtenido.setPartidosHit(cantPartidosAcertados);
+							scoreObtenido.setPoints(puntos);
+							scoreObtenido.setBet(ec);
+							scoreObtenido.setString("username_player", ec.getString("username_player"));
+							scoreObtenido.saveIt();
+						}
+						f.setBoolean("calculated", true);
+						f.saveIt();
+						res.body("Fecha Calculada");
+					}else{
+						res.body("Error: La fecha ya fue calculada.");
+					}
+				}else{
+					res.body("Error: La fecha contiene partidos sin resultados.");
+				}
+			}
+			Base.commitTransaction();
+		}catch (Exception e){
+			Base.rollbackTransaction();
+			res.status(500);
+			res.body(e.getMessage());
+		}
+		return null;
 	};
 }

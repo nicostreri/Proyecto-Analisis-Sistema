@@ -48,6 +48,7 @@ public class ApiController{
 	};
 
 	public static Route cargarResultado = (req, res) ->{
+																								//HACER SOLO SI EL PARTIDO YA SE JUGO
 		Match temp = Match.findById(req.params(":idPartido"));
 		Result tR = temp.obtenerResultado();
 		Integer cantV;
@@ -68,7 +69,7 @@ public class ApiController{
 		}
 		tR.setTipo(tipo);
 		tR.saveIt();
-		res.body("ok");
+		res.body("Resultado Guardado");
 		return null;
 	};
 

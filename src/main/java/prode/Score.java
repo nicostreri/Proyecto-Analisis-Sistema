@@ -24,13 +24,30 @@ public class Score extends Model {
     public Bet obtenerBet(){
         return Bet.findFirst("id= ?",this.get("bet_id"));
     }
+
+    public void setBet(Bet b){
+        this.setInteger("bet_id", b.getId());
+    }
     
-    public String getPoints(){
-        return this.getString("amount_points");
+    public Integer getPoints(){
+        return this.getInteger("amount_points");
+    }
+
+    public void setPoints(Integer puntos){
+        this.setInteger("amount_points", puntos);
     }
     
     public String getId(){
         return this.getString("id");        
     }
+
+    public Integer getPartidosHit(){
+        return this.getInteger("correct_predicted_matches");
+    }
+
+    public void setPartidosHit(Integer h){
+        this.setInteger("correct_predicted_matches", h);
+    }
+
 
 }

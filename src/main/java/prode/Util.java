@@ -32,8 +32,10 @@ public class Util{
 		return req.session().attribute("logeado") != null;
 	}
 
-	//@pre: Util.userLogeado() == True
-	//@pre: username e idFixture deben existir en la Base de Datos
+	/**
+	 * @pre: Util.userLogeado() == True
+	 * @pre: username e idFixture deben existir en la Base de Datos
+	*/
 	public static boolean userSuscripto(String username, String idFixture){
 		List<Player> suscritos = Fixture.findById(idFixture).getAll(Player.class);
 		for(Player t : suscritos){
@@ -89,7 +91,6 @@ public class Util{
 			Iterator<String> it = apuesta.keys();
 			while(it.hasNext()){
 				//Por cada Resultado Apostado, se crea una predicion
-				//String idPart = apuesta.getString(it.next()).substring(1);
 				String key = it.next();
 				String idPart = key.substring(1);
 				int apu = apuesta.getInt(key);
@@ -103,11 +104,11 @@ public class Util{
 				bR.saveIt();
 			}
 			Base.commitTransaction();
-			return "";
+			return "Apuesta Registrada.";
 		}catch (Exception e) {
 			Base.rollbackTransaction();
 		}
-		return null;
+		return "No se pudo realizar la Apuesta";
 	}
 
 	private static String obtenerTipo(int t){
@@ -115,5 +116,13 @@ public class Util{
 		if(t== 0)return "empate";
 		if(t== 1)return "gana_visitante";
 		return null;
+	}
+
+	/*
+		Fecha Cerrada es aquella para la cual ya se tiene cargado un resultado para cada uno de sus partidos
+	*/
+	public static boolean fechaCerrada(Schedule f){
+		if(f == null)return false;
+		return true; //															HACER
 	}
 }

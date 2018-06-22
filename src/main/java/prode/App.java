@@ -43,6 +43,7 @@ public class App{
 	    post("/api/fixture/:idFix/fecha", ApiController.nuevaFecha);
 	    post("/api/equipo", ApiController.nuevoEquipo);
 	    post("/api/partido", ApiController.nuevoPartido);
+	    post("/api/fecha/:idFecha/calcular", FechaController.calcularFecha);
 
     	//Control de  Exceptions
     	exception(Exception.class, (exception, request, response) -> {

@@ -1,6 +1,6 @@
 create table scores(  
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    	amount_points INTEGER,
+    amount_points INTEGER,
 	correct_predicted_matches INTEGER,
 	username_player varchar(128),
 	bet_id INTEGER,
