@@ -17,7 +17,8 @@ public class App{
 		before("/api/*", Filters.seccionAdmin);
 		before("/admin", Filters.seccionAdmin);
 		get("/", GeneralController.index, new MustacheTemplateEngine());
-		get("/registro", UserController.registrar, new MustacheTemplateEngine());
+		get("/registro", UserController.registrarForm, new MustacheTemplateEngine());
+		post("/registro", UserController.registroUser, new MustacheTemplateEngine());
 		get("/login",UserController.loginForm, new MustacheTemplateEngine());
 	    post("/login", UserController.login, new MustacheTemplateEngine());
 	    get("/protegido/perfil", UserController.perfil, new MustacheTemplateEngine());

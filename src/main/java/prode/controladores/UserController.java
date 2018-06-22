@@ -58,7 +58,7 @@ public class UserController {
 	    return null;
 	};
 
-	public static TemplateViewRoute registrar = (req, res) -> {
+	public static TemplateViewRoute registrarForm = (req, res) -> {
 	    return new ModelAndView(null, "./views/registro.mustache");
 	};
 
@@ -200,4 +200,52 @@ public class UserController {
     return new ModelAndView(respuesta,"./views/listPredicciones.mustache");   
    };
 
+    public static TemplateViewRoute registroUser = (Request req,Response res) -> {
+        boolean registroCorrecto = false;
+        String error = "";
+
+        //Se capturan los datos del Formulario
+        String username = req.queryParams("usuario");
+        String nombre = req.queryParams("nombre");
+        String apellido = req.queryParams("apellido");
+        String contrasena = req.queryParams("pwd1");
+        String contrasenaConfir = req.queryParams("pwd2");
+
+        if(username == null || nombre == null || apellido==null || contrasena==null || contrasenaConfir==null || 
+            username.equals("") || contrasena.equals("") || nombre.equals("") || apellido.equals("") || contrasenaConfir.equals("")){
+            error = "Error: Complete todos los Datos.";
+            res.status(400);
+        }else{
+            //Se completo todo el formulario
+            if(contrasena.equals(contrasenaConfir)){
+                //La comprobacion de Clave es correcta
+                if(User.findById(username) == null){
+                    //El usuario no existe, se creara en la Base de Datos como User y como Player
+                    User nuevo = new User();
+                    nuevo.setString("username", username);
+                    nuevo.setString("name", nombre);
+                    nuevo.setString("lastname", apellido);
+                    nuevo.setString("password", contrasena);
+                    nuevo.insert();
+
+                    Player pNuevo = new Player();
+                    pNuevo.setString("username",nuevo.getId());
+                    pNuevo.insert();
+                    registroCorrecto = true;
+                    res.redirect("/login");
+                    return null;
+                }else{
+                    error="Error: El username elegido esta en uso.";
+                }
+            }else{
+                error="Error: Las Contrasenas no coinciden.";
+            }
+        }
+        
+        Map<String, String> info = new HashMap();
+        if(!registroCorrecto){
+            info.put("error", error);
+        }
+        return new ModelAndView(info, "./views/registro.mustache");
+    };
 }
