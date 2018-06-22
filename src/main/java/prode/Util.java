@@ -123,6 +123,18 @@ public class Util{
 	*/
 	public static boolean fechaCerrada(Schedule f){
 		if(f == null)return false;
-		return true; //															HACER
+		for(Match p : f.obtenerListaPartidos()){
+			if(p.obtenerResultado().getTipo().equals("no_jugado"))return false;
+		}
+		return true;
+	}
+
+	public static boolean fixtureCerrado(String idFix){
+		Fixture fix = Fixture.findById(idFix);
+		if(fix == null)return false;
+		for(Schedule s : fix.obtenerListaSchedules()){
+			if(!Util.fechaCerrada(s))return false;
+		}
+		return true;
 	}
 }

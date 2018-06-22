@@ -57,7 +57,7 @@ public class FixtureController{
       String idFix=req.params(":id");
       Fixture tempFixture = Fixture.findById(idFix);
       List<Map<String,String>> datos = new ArrayList();
-      //if(Util.fixtureCerrado(idFix)){
+      if(Util.fixtureCerrado(idFix)){
         List<Player> tempPlayerGanadores = new ArrayList();
         List<Player> tempPlayers = tempFixture.obtenerListaPlayer();
         int maxPunt=0;
@@ -91,7 +91,7 @@ public class FixtureController{
             datos.add(tempDatos);
             i++;
         }        
-    //}   
+      }   
       Map respuesta = new HashMap();
       respuesta.put("fix_name",tempFixture.getName());
       respuesta.put("hay_elem",datos);
