@@ -3,63 +3,56 @@
 	<div class="row ">
 		<div class="col-md-12">
 			<div class="card border-secondary">
-			  	<div class="card-header">Perfil de usuario
-              <a href="../protegido/apuestas" class="btn btn-primary">
-									Apuestas sin calcular
-							</a>	 
-							<a href="../protegido/misfixture" class="btn btn-primary" style="float: right;">Mis Fixtures
-              </a>			
-					</div>
-				<div class="card-body">
-          <div class="row">
-            <div class="col-md-5">
-			      	<h4 class="card-title">Datos del usuario</h4>
-							  <hr align="left" width="60%">
-							  <span class="font-weight-bold"> Usuario: </span> {{username}}
-							  <br/>
-							  <br/>
-							  <span class="font-weight-bold"> Nombre: </span> {{nombre_apellido}}
-							  <br/>
-                <br/>
-                <span class="font-weight-bold"> Puntaje total: </span> {{punt_total}}
-                <br/>
-							  <hr align="left" width="60%">
-              <a href="../../salir" class="btn btn-primary">
-									Cerrar sesion
-							</a>
-             </div>
-							<div class="col-md-7">
-							<h4 class="titulo">Puntuaciones por fechas</h4>
-                  <div class="pre-scrollable" style="max-height:40vh">
-								    <table class="table" >	
-								        <thead>
-								            <tr>
-								                <td>#</td>
-								                <td>Fecha</td>
-								                <td>Fixture</td>
-								                <td>Puntuacion</td>
-                                <th scope="col">Opciones</th>
-								            </tr>
-								        </thead>
-								        <tbody>
-                       {{#hay_elem}}
-													<tr>
-													<th scope="row">{{num}}</th>
-													<td>{{name_fecha}}</td>
-													<td>{{name_fix}}</td>
-													<td>{{point}}</td>
-                          <td><a href="../protegido/fechaApostada/{{id_score}}"><div class="fa fa-eye"></div></a></td>
-													</tr>
-												{{/hay_elem}}
-								        </tbody>
-								    </table>
-                  </div>
-								</div>
-			  	</div>
-        </div>
+			  	<div class="card-header">Perfil de usuario</div>
+					<div class="card-body">
+	          <div class="row">
+	            <div class="col-md-4">
+				      	<h4 class="card-title">Datos del usuario</h4>
+								  <span class="font-weight-bold"> Usuario: </span> {{username}}
+								  <br/>
+								  <span class="font-weight-bold"> Nombre: </span> {{nombre_apellido}}
+	                <br/>
+	                <br/>
+	                <span class="font-weight-bold"> Puntaje total: </span> {{punt_total}}
+	                <br/>
+								  <hr align="left" width="60%">	
+	            </div>
+							<div class="col-md-8">
+								<h4 class="titulo">Puntuaciones por fechas</h4>
+	              <div class="pre-scrollable" style="max-height:40vh">
+									<table class="table" >	
+									  <thead>
+									    <tr>
+									      <th>#</th>
+									      <th>Fecha</th>
+									      <th>Fixture</th>
+									      <th>Puntuacion</th>
+	                      <th scope="col">Opciones</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+	                  	{{#hay_elem}}
+											<tr>
+												<th scope="row">{{num}}</th>
+												<td>{{name_fecha}}</td>
+												<td>{{name_fix}}</td>
+												<td>{{point}}</td>
+	                      <td><a href="../protegido/fechaApostada/{{id_score}}"><div class="fa fa-eye"></div></a></td>
+											</tr>
+											{{/hay_elem}}
+									  </tbody>
+									</table>
+	              </div>
+							</div>
+				  	</div>
+				  	<div class="row">
+				  		<a href="../protegido/misfixture" class="btn btn-primary">Mis Fixtures</a>&nbsp;
+              <a href="../protegido/apuestas" class="btn btn-primary">Apuestas sin calcular</a>&nbsp;
+              <a href="../../salir" class="btn btn-primary">Cerrar sesion</a>&nbsp;
+				  	</div>
+	        </div>
 			</div>
 		</div>
 	</div>
 </div>
 {{>footer}}
-
