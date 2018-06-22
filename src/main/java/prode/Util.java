@@ -133,7 +133,7 @@ public class Util{
 		Fixture fix = Fixture.findById(idFix);
 		if(fix == null)return false;
 		for(Schedule s : fix.obtenerListaSchedules()){
-			if(!Util.fechaCerrada(s))return false;
+			if(!Util.fechaCerrada(s) || !s.getBoolean("calculated"))return false;
 		}
 		return true;
 	}
