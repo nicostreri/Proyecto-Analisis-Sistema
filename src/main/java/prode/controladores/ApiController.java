@@ -48,8 +48,12 @@ public class ApiController{
 	};
 
 	public static Route cargarResultado = (req, res) ->{
-																								//HACER SOLO SI EL PARTIDO YA SE JUGO
 		Match temp = Match.findById(req.params(":idPartido"));
+		if(temp.getFecha().compareTo(new Date()) == 1){
+			//No se puede cargar un resultado antes de la Fecha de Juego
+			res.body("Error, Partido aun no jugado.");
+			return null;
+		}
 		Result tR = temp.obtenerResultado();
 		Integer cantV;
 		Integer cantL;
@@ -131,6 +135,11 @@ public class ApiController{
 			Team tL = Team.findById(local);
 			Team tV = Team.findById(visit);
 			Schedule f = Schedule.findById(fId);
+
+			if(f.getBoolean("calculated")){
+				res.body("Error, Fecha ya calculada. Imposible Modificar.");
+				return null;
+			}
 			fecha += " 00:00:00";
 			if(tL != null && tV != null){
 				//Los equipos existen y son distintos
