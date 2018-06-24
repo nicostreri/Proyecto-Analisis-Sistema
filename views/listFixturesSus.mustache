@@ -24,7 +24,8 @@
 													<tr>
 													<th scope="row">{{id}}</th>
 													<td>{{name}}</td>
-													<td>
+                          <td><a href="../../fixture/{{id}}"><div class="fa fa-eye"></div>Ver </a>
+                          <br/>
                           <button class="btn btn-primary" onclick="sendResultado('{{id}}');"><div class="fa fa-check-circle"></div> Suscribirse</button>
                           </td>
 													</tr>
@@ -41,6 +42,7 @@
 								            <tr>
                 		      	<th scope="col">#</th>
 		                    		<th scope="col">Nombre</th>
+                            <th scope="col">Opciones</th>
 								            </tr>
 								        </thead>
 								        <tbody>
@@ -48,6 +50,7 @@
 													<tr>
 													<th scope="row">{{id}}</th>
 													<td>{{name}}</td>
+                          <td><a href="../../fixture/{{id}}"><div class="fa fa-eye"></div>Ver</a></td>
 													</tr>
 												{{/hay_elem_fixSus}}
 								        </tbody>
