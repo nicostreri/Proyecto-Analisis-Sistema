@@ -144,7 +144,7 @@ public class UserController {
       }
     };
   
-   public static TemplateViewRoute listarApuestasSinCalcular = (req,res) ->{
+   public static TemplateViewRoute listarApuestas = (req,res) ->{
     List<Map<String,String>> datos = new ArrayList();
     String userName=req.session().attribute("username");
 		User tempUser = User.findById(userName);
@@ -153,7 +153,7 @@ public class UserController {
     int i = 1;
     for(Bet b : tempBets){
     
-      if(b.obtenerScore() == null){
+      //if(b.obtenerScore() == null){
           Map<String,String> tempDatos = new HashMap();
           Schedule tempSchedule = b.obtenerSchedule();
           Fixture tempFixture = tempSchedule.obtenerFixturePerteneciente();  
@@ -163,13 +163,13 @@ public class UserController {
           tempDatos.put("id_bet",b.getString("id"));
           datos.add(tempDatos);
           i++;
-      }     
+      //}     
       
     }
   
     Map respuesta = new HashMap();
     respuesta.put("hay_elem",datos);
-    return new ModelAndView(respuesta,"./views/listApuestasSinCalcular.mustache");  
+    return new ModelAndView(respuesta,"./views/listApuestas.mustache");  
    };
 
    public static TemplateViewRoute listarPredicciones = (req,res) ->{   

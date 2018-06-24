@@ -10,33 +10,46 @@ public class App{
     public static void main( String[] args ){
     	port(8081);
 
-    	//Routers
+    	//Filtros
     	before("*", Filters.preGeneral);
 		after("*", Filters.posGeneral);
 		before("/protegido/*", Filters.seccionProtegida);
 		before("/api/*", Filters.seccionAdmin);
 		before("/admin", Filters.seccionAdmin);
+
+
 		get("/", GeneralController.index, new MustacheTemplateEngine());
+		get("/stop", GeneralController.stop);
+
+
+		//Registro de Usuario
 		get("/registro", UserController.registrarForm, new MustacheTemplateEngine());
 		post("/registro", UserController.registroUser, new MustacheTemplateEngine());
+		
+		//Login de Usuario
 		get("/login",UserController.loginForm, new MustacheTemplateEngine());
 	    post("/login", UserController.login, new MustacheTemplateEngine());
-	    get("/protegido/perfil", UserController.perfil, new MustacheTemplateEngine());
-	    get("/salir", UserController.salir);
-	    get("/stop", GeneralController.stop);
+	    
+	    //Secciones Publicas
 	    get("/fecha/:id", FechaController.listarPartidosDeFecha, new MustacheTemplateEngine());
-	    post("/protegido/fecha/:id", FechaController.apostarFecha);
 		get("/fixture", FixtureController.listarTodosFixtures, new MustacheTemplateEngine());
 	    get("/fixture/:id",FixtureController.listarFechasDeFixture, new MustacheTemplateEngine());
         get("/fixture/:id/ganadores",FixtureController.listarGanadoresDeFixture, new MustacheTemplateEngine());
-	    get("/admin", AdminController.mainAdmin, new MustacheTemplateEngine());
-        get("/protegido/fechaApostada/:id",UserController.listarPartidosApostados, new MustacheTemplateEngine());
+
+
+	    //Secciones Privadas, Acceso con user logeado
+	    get("/protegido/perfil", UserController.perfil, new MustacheTemplateEngine());
+	    get("/salir", UserController.salir);
+	    post("/protegido/fecha/:id", FechaController.apostarFecha);
+	    get("/protegido/fechaApostada/:id",UserController.listarPartidosApostados, new MustacheTemplateEngine());
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());
         post("/protegido/misfixture",FixtureController.suscribirPlayerFixture);
-      get("/protegido/apuestas",UserController.listarApuestasSinCalcular,new MustacheTemplateEngine());
-      get("/protegido/apuestas/:id_bet",UserController.listarPredicciones,new MustacheTemplateEngine());  
+      	get("/protegido/apuestas",UserController.listarApuestas,new MustacheTemplateEngine());
+      	get("/protegido/apuestas/:id_bet",UserController.listarPredicciones,new MustacheTemplateEngine());  
 
-	    //Routers Api
+
+	    //Routers Api, solo acceso Administradores
+	    get("/admin", AdminController.mainAdmin, new MustacheTemplateEngine()); //Panel de Administracion
 	    get("/api/equipo", ApiController.listarEquipos);
 	    get("/api/fixture", ApiController.listarFixture);
 	    get("/api/fixture/:idFix", ApiController.listarFecha);
@@ -47,6 +60,7 @@ public class App{
 	    post("/api/equipo", ApiController.nuevoEquipo);
 	    post("/api/partido", ApiController.nuevoPartido);
 	    post("/api/fecha/:idFecha/calcular", FechaController.calcularFecha);
+
 
     	//Control de  Exceptions
     	exception(Exception.class, (exception, request, response) -> {
