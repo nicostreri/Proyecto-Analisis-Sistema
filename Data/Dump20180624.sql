@@ -79,6 +79,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `players_fixtures` WRITE;
 /*!40000 ALTER TABLE `players_fixtures` DISABLE KEYS */;
+INSERT INTO `players_fixtures` VALUES ('admin',1,'2018-06-24 16:13:57','2018-06-24 16:13:57'),('admin',2,'2018-06-24 15:56:41','2018-06-24 15:56:41');
 /*!40000 ALTER TABLE `players_fixtures` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +98,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `results` WRITE;
 /*!40000 ALTER TABLE `results` DISABLE KEYS */;
-INSERT INTO `results` VALUES (1,'no_jugado',0,0,NULL,NULL),(2,'no_jugado',0,0,NULL,NULL),(3,'no_jugado',0,0,NULL,NULL),(4,'no_jugado',0,0,NULL,NULL),(5,'no_jugado',0,0,NULL,NULL),(6,'no_jugado',0,0,NULL,NULL),(7,'no_jugado',0,0,NULL,NULL),(8,'no_jugado',0,0,NULL,NULL),(9,'no_jugado',0,0,NULL,NULL),(10,'no_jugado',0,0,NULL,NULL),(11,'no_jugado',0,0,NULL,NULL),(12,'no_jugado',0,0,NULL,NULL),(13,'no_jugado',0,0,NULL,NULL),(14,'no_jugado',0,0,NULL,NULL),(15,'no_jugado',0,0,NULL,NULL),(16,'no_jugado',0,0,NULL,NULL),(17,'no_jugado',0,0,NULL,NULL),(18,'no_jugado',0,0,NULL,NULL),(19,'no_jugado',0,0,NULL,NULL),(20,'no_jugado',0,0,NULL,NULL),(21,'no_jugado',0,0,NULL,NULL),(22,'no_jugado',0,0,NULL,NULL),(23,'no_jugado',0,0,NULL,NULL),(24,'no_jugado',0,0,NULL,NULL),(25,'no_jugado',0,0,NULL,NULL),(26,'no_jugado',0,0,NULL,NULL),(27,'no_jugado',0,0,NULL,NULL),(28,'no_jugado',0,0,NULL,NULL),(29,'no_jugado',0,0,NULL,NULL),(30,'no_jugado',0,0,NULL,NULL),(31,'no_jugado',0,0,NULL,NULL),(32,'no_jugado',0,0,NULL,NULL),(33,'no_jugado',0,0,NULL,NULL),(34,'no_jugado',0,0,NULL,NULL),(35,'no_jugado',0,0,NULL,NULL),(36,'no_jugado',0,0,NULL,NULL),(37,'no_jugado',0,0,NULL,NULL),(38,'no_jugado',0,0,NULL,NULL),(39,'no_jugado',0,0,NULL,NULL),(40,'no_jugado',0,0,NULL,NULL),(41,'no_jugado',0,0,NULL,NULL),(42,'no_jugado',0,0,NULL,NULL),(43,'no_jugado',0,0,NULL,NULL),(44,'no_jugado',0,0,NULL,NULL),(45,'no_jugado',0,0,NULL,NULL),(46,'no_jugado',0,0,NULL,NULL),(47,'no_jugado',0,0,NULL,NULL),(48,'no_jugado',0,0,NULL,NULL),(49,'no_jugado',0,0,NULL,NULL),(50,'no_jugado',0,0,NULL,NULL),(51,'no_jugado',0,0,NULL,NULL),(52,'no_jugado',0,0,NULL,NULL),(53,'no_jugado',0,0,NULL,NULL),(54,'no_jugado',0,0,NULL,NULL),(55,'no_jugado',0,0,NULL,NULL),(56,'no_jugado',0,0,NULL,NULL),(57,'no_jugado',0,0,NULL,NULL);
+INSERT INTO `results` VALUES (1,'gana_local',5,0,NULL,NULL),(2,'gana_visitante',0,1,NULL,NULL),(3,'gana_local',3,1,NULL,NULL),(4,'gana_local',1,0,NULL,NULL),(5,'no_jugado',0,0,NULL,NULL),(6,'no_jugado',0,0,NULL,NULL),(7,'gana_visitante',0,1,NULL,NULL),(8,'empate',3,3,NULL,NULL),(9,'gana_visitante',0,1,NULL,NULL),(10,'gana_local',1,0,NULL,NULL),(11,'no_jugado',0,0,NULL,NULL),(12,'no_jugado',0,0,NULL,NULL),(13,'gana_local',2,1,NULL,NULL),(14,'gana_visitante',0,1,NULL,NULL),(15,'empate',1,1,NULL,NULL),(16,'gana_local',1,0,NULL,NULL),(17,'no_jugado',0,0,NULL,NULL),(18,'no_jugado',0,0,NULL,NULL),(19,'empate',1,1,NULL,NULL),(20,'gana_local',2,0,NULL,NULL),(21,'gana_visitante',0,3,NULL,NULL),(22,'gana_local',2,0,NULL,NULL),(23,'no_jugado',0,0,NULL,NULL),(24,'no_jugado',0,0,NULL,NULL),(25,'empate',1,1,NULL,NULL),(26,'gana_visitante',0,1,NULL,NULL),(27,'gana_local',2,0,NULL,NULL),(28,'gana_visitante',1,2,NULL,NULL),(29,'no_jugado',0,0,NULL,NULL),(30,'no_jugado',0,0,NULL,NULL),(31,'gana_visitante',0,1,NULL,NULL),(32,'gana_local',1,0,NULL,NULL),(33,'gana_local',2,1,NULL,NULL),(34,'gana_visitante',1,2,NULL,NULL),(35,'no_jugado',0,0,NULL,NULL),(36,'no_jugado',0,0,NULL,NULL),(37,'gana_local',3,0,NULL,NULL),(38,'gana_visitante',1,2,NULL,NULL),(39,'gana_local',5,2,NULL,NULL),(40,'gana_local',6,1,NULL,NULL),(41,'no_jugado',0,0,NULL,NULL),(42,'no_jugado',0,0,NULL,NULL),(43,'gana_visitante',1,2,NULL,NULL),(44,'gana_visitante',1,2,NULL,NULL),(45,'empate',2,2,NULL,NULL),(46,'gana_visitante',0,3,NULL,NULL),(47,'no_jugado',0,0,NULL,NULL),(48,'no_jugado',0,0,NULL,NULL),(49,'no_jugado',0,0,NULL,NULL),(50,'no_jugado',0,0,NULL,NULL),(51,'no_jugado',0,0,NULL,NULL),(52,'no_jugado',0,0,NULL,NULL),(53,'no_jugado',0,0,NULL,NULL),(54,'no_jugado',0,0,NULL,NULL),(55,'no_jugado',0,0,NULL,NULL),(56,'no_jugado',0,0,NULL,NULL),(57,'no_jugado',0,0,NULL,NULL);
 /*!40000 ALTER TABLE `results` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,16 +110,6 @@ LOCK TABLES `schedules` WRITE;
 /*!40000 ALTER TABLE `schedules` DISABLE KEYS */;
 INSERT INTO `schedules` VALUES (1,'GRUPO A',1,0,NULL,NULL),(2,'GRUPO B',1,0,NULL,NULL),(3,'GRUPO C',1,0,NULL,NULL),(4,'GRUPO D',1,0,NULL,NULL),(5,'GRUPO E',1,0,NULL,NULL),(6,'GRUPO F',1,0,NULL,NULL),(7,'GRUPO G',1,0,NULL,NULL),(8,'GRUPO H',1,0,NULL,NULL),(9,'PRIMERA',2,0,NULL,NULL),(10,'SEGUNDA',2,0,NULL,NULL),(11,'TERCERA',2,0,NULL,NULL);
 /*!40000 ALTER TABLE `schedules` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `schema_version`
---
-
-LOCK TABLES `schema_version` WRITE;
-/*!40000 ALTER TABLE `schema_version` DISABLE KEYS */;
-INSERT INTO `schema_version` VALUES ('20180413111037','2018-06-24 04:04:17',-257),('20180420110946','2018-06-24 04:04:18',-258),('20180504100316','2018-06-24 04:04:18',-247),('20180504104233','2018-06-24 04:04:18',-350),('20180505194536','2018-06-24 04:04:19',-269),('20180505200116','2018-06-24 04:04:19',-369),('20180505203845','2018-06-24 04:04:19',-526),('20180506002554','2018-06-24 04:04:20',-293),('20180506003614','2018-06-24 04:04:20',-323),('20180506021133','2018-06-24 04:04:21',-381),('20180506021608','2018-06-24 04:04:21',-325),('20180506021959','2018-06-24 04:04:21',-395),('20180506184011','2018-06-24 04:04:22',-1041),('20180619024435','2018-06-24 04:04:23',-326);
-/*!40000 ALTER TABLE `schema_version` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -159,4 +150,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-24  3:42:23
+-- Dump completed on 2018-06-24 19:05:35
