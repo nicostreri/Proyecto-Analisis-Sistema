@@ -76,8 +76,8 @@ insert into matches (id,match_date,schedule_id,local_team_id,visitor_team_id,res
 
 insert into users (username,name,lastname,password) values ('user123','UserNombre','UserApellido','123');
 
-insert into players (username,total_score) values 
-('user123',0);
+insert into players (username) values 
+('user123');
 
 -- Controlar que se pueden crear apuestas sin que el usuario este suscrito al fixture
 
