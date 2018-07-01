@@ -120,7 +120,7 @@ public class UserController {
                             break;      
                 } 
                 tempDatos.put("apuesta",tempTipo);
-                if(tempPrediction.getHit()!="0"){//Acerto
+                if(tempPrediction.getHit()){//Acerto
                   tempDatos.put("result","Acerto");
                 }else{
                   tempDatos.put("result","No Acerto");      

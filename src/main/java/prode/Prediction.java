@@ -15,8 +15,8 @@ public class Prediction extends Model {
 		setBoolean("hit", h);
 	}
 
-    public String getHit(){
-        return this.getString("hit");
+    public boolean getHit(){
+        return this.getBoolean("hit");
     }
 
     public String getTipo(){
