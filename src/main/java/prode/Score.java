@@ -48,6 +48,9 @@ public class Score extends Model {
     public void setPartidosHit(Integer h){
         this.setInteger("correct_predicted_matches", h);
     }
-
-
+    
+    public Player getPlayer(){
+        return Player.findFirst("username= ?",this.get("username_player"));
+    }
+    
 }

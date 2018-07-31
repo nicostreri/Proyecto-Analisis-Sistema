@@ -93,47 +93,55 @@ public class UserController {
 	};
 
     public static TemplateViewRoute listarPartidosApostados = (req,res) ->{
+      String userName=req.session().attribute("username");
+      User tempUser = User.findById(userName);
+      Player tempPlayer = Player.findById(userName);   
       Score tempScore = Score.findById(req.params(":id"));
-      Bet tempBet = tempScore.obtenerBet();
-      String idBet = tempBet.getString("id");
-      Schedule tempSchedule = tempBet.obtenerSchedule();           
-      List<Map<String,String>> datos = new ArrayList(); 
-      if(tempSchedule != null){
-        List<Match> tempMatch = tempSchedule.obtenerListaPartidos();
-        for(Match m : tempMatch){
-            Result tempResult = m.obtenerResultado();
-            if(!tempResult.getString("result_type").equals("no_jugado")){
-              String idResult= tempResult.getString("id");
-              BetsResults tempBetResult = BetsResults.findByCompositeKeys(idBet,idResult);
-              if(tempBetResult != null ){
-                Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
-                Map<String,String> tempDatos = m.getDatos();
-                String tempTipo = tempPrediction.getTipo();
-                switch (tempTipo){
-                   case "gana_local": tempTipo = "Gana Local";
-                                      break;
-                   case "gana_visitante": tempTipo = "Gana Visitante";
-                                          break;
-                   case "empate": tempTipo= "Empate";
-                                  break;
-                   default: tempTipo = "Sin definir";
-                            break;      
-                } 
-                tempDatos.put("apuesta",tempTipo);
-                if(tempPrediction.getHit()){//Acerto
-                  tempDatos.put("result","Acerto");
-                }else{
-                  tempDatos.put("result","No Acerto");      
-                }
-                datos.add(tempDatos);
+      if(tempScore.getPlayer().getUsername().equals(tempPlayer.getUsername())){
+        Bet tempBet = tempScore.obtenerBet();
+        String idBet = tempBet.getString("id");
+        Schedule tempSchedule = tempBet.obtenerSchedule();           
+        List<Map<String,String>> datos = new ArrayList(); 
+        if(tempSchedule != null){
+          List<Match> tempMatch = tempSchedule.obtenerListaPartidos();
+          for(Match m : tempMatch){
+              Result tempResult = m.obtenerResultado();
+              if(!tempResult.getString("result_type").equals("no_jugado")){
+                String idResult= tempResult.getString("id");
+                BetsResults tempBetResult = BetsResults.findByCompositeKeys(idBet,idResult);
+                if(tempBetResult != null ){
+                  Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
+                  Map<String,String> tempDatos = m.getDatos();
+                  String tempTipo = tempPrediction.getTipo();
+                  switch (tempTipo){
+                     case "gana_local": tempTipo = "Gana Local";
+                                        break;
+                     case "gana_visitante": tempTipo = "Gana Visitante";
+                                            break;
+                     case "empate": tempTipo= "Empate";
+                                    break;
+                     default: tempTipo = "Sin definir";
+                              break;      
+                  } 
+                  tempDatos.put("apuesta",tempTipo);
+                  if(tempPrediction.getHit()){//Acerto
+                    tempDatos.put("result","Acerto");
+                  }else{
+                    tempDatos.put("result","No Acerto");      
+                  }
+                  datos.add(tempDatos);
+              }
             }
-          }
-        }        
+          }        
+        }
+        Map respuesta = new HashMap();
+        respuesta.put("fecha_name",tempSchedule.getString("date_name"));
+        respuesta.put("hay_elem",datos);
+        return new ModelAndView(respuesta,"./views/listPartidosApostados.mustache");
+      }else{
+        res.status(401);
+        return null;
       }
-      Map respuesta = new HashMap();
-      respuesta.put("fecha_name",tempSchedule.getString("date_name"));
-      respuesta.put("hay_elem",datos);
-      return new ModelAndView(respuesta,"./views/listPartidosApostados.mustache");
     };
   
    public static TemplateViewRoute listarApuestasSinCalcular = (req,res) ->{
@@ -164,40 +172,48 @@ public class UserController {
     return new ModelAndView(respuesta,"./views/listApuestasSinCalcular.mustache");  
    };
 
-   public static TemplateViewRoute listarPredicciones = (req,res) ->{
+   public static TemplateViewRoute listarPredicciones = (req,res) ->{   
+    String userName=req.session().attribute("username");
+    User tempUser = User.findById(userName);
+    Player tempPlayer = Player.findById(userName);    
     Bet tempBet = Bet.findById(req.params(":id_bet"));
-    String idBet = tempBet.getString("id");
-    Schedule tempSchedule = tempBet.obtenerSchedule();
-    List<Map<String,String>> datos = new ArrayList(); 
-    if(tempSchedule != null){
-        List<Match> tempMatch = tempSchedule.obtenerListaPartidos();
-        for(Match m : tempMatch){
-            Result tempResult = m.obtenerResultado();
-            String idResult= tempResult.getString("id");
-            BetsResults tempBetResult = BetsResults.findByCompositeKeys(idBet,idResult);
-            if(tempBetResult != null ){
-              Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
-              Map<String,String> tempDatos = m.getDatos();
-              String tempTipo = tempPrediction.getTipo();
-              switch (tempTipo){
-                 case "gana_local": tempTipo = "Gana Local";
-                                    break;
-                 case "gana_visitante": tempTipo = "Gana Visitante";
-                                        break;
-                 case "empate": tempTipo= "Empate";
-                                break;
-                 default: tempTipo = "Sin definir";
-                          break;      
-              } 
-              tempDatos.put("apuesta",tempTipo);
-              datos.add(tempDatos);
-            }
-          }       
-    }
-    Map respuesta = new HashMap();
-    respuesta.put("fecha_name",tempSchedule.getString("date_name"));
-    respuesta.put("hay_elem",datos);
-    return new ModelAndView(respuesta,"./views/listPredicciones.mustache");   
+    if(tempBet.obtenerPlayer().getUsername().equals(tempPlayer.getUsername())){
+      String idBet = tempBet.getString("id");
+      Schedule tempSchedule = tempBet.obtenerSchedule();
+      List<Map<String,String>> datos = new ArrayList(); 
+      if(tempSchedule != null){
+          List<Match> tempMatch = tempSchedule.obtenerListaPartidos();
+          for(Match m : tempMatch){
+              Result tempResult = m.obtenerResultado();
+              String idResult= tempResult.getString("id");
+              BetsResults tempBetResult = BetsResults.findByCompositeKeys(idBet,idResult);
+              if(tempBetResult != null ){
+                Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
+                Map<String,String> tempDatos = m.getDatos();
+                String tempTipo = tempPrediction.getTipo();
+                switch (tempTipo){
+                   case "gana_local": tempTipo = "Gana Local";
+                                      break;
+                   case "gana_visitante": tempTipo = "Gana Visitante";
+                                          break;
+                   case "empate": tempTipo= "Empate";
+                                  break;
+                   default: tempTipo = "Sin definir";
+                            break;      
+                } 
+                tempDatos.put("apuesta",tempTipo);
+                datos.add(tempDatos);
+              }
+            }       
+      }
+      Map respuesta = new HashMap();
+      respuesta.put("fecha_name",tempSchedule.getString("date_name"));
+      respuesta.put("hay_elem",datos);
+      return new ModelAndView(respuesta,"./views/listPredicciones.mustache");
+    }else{
+      res.status(401);
+      return null;
+    }   
    };
 
     public static TemplateViewRoute registroUser = (Request req,Response res) -> {
