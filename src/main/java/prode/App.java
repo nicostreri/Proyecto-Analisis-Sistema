@@ -1,5 +1,7 @@
 package prode;
 
+import com.codahale.metrics.*;
+import java.util.concurrent.TimeUnit;
 import prode.*;
 import prode.controladores.*;
 import static spark.Spark.*;
@@ -8,6 +10,7 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class App{
     public static void main( String[] args ){
+    	Filters.reporter.start(1, TimeUnit.SECONDS);
     	port(8081);
 
     	//Filtros
