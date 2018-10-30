@@ -32,7 +32,7 @@ public class Match extends Model {
 		}
 		//Retorna el resultado del partido
 		public Result obtenerResultado(){
-			return Result.findFirst("id=?",this.get("result_id"));
+			return Result.findFirst("id = ?",this.getInteger("result_id"));
 		}
 
 		public Map<String,String> getDatos(){

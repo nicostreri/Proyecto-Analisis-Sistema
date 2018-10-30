@@ -24,6 +24,7 @@ public class App{
 		get("/", GeneralController.index, new MustacheTemplateEngine());
 		get("/stop", GeneralController.stop);
 
+		get("/partido-estadistica/:id", ApiController.estadisticaPartido);
 
 		//Registro de Usuario
 		get("/registro", UserController.registrarForm, new MustacheTemplateEngine());

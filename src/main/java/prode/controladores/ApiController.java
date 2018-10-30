@@ -162,4 +162,46 @@ public class ApiController{
 		}
 		return null;
 	};
+
+
+	/**
+	 * Obtiene las estadisticas de las apuestas de un Partido
+	 * Retorna:  Porcentaje de Gana Local, % Empate, % Gana Visitante
+	*/
+	public static Route estadisticaPartido = (req, res) -> {
+		String idPartido = req.params(":id");
+		Match partido = Match.findById(idPartido);
+		Result rPart = partido.obtenerResultado();
+		
+		List<BetsResults> apuestasAsociadas = BetsResults.find("result_id = ?", rPart.getString("id"));
+		int total = apuestasAsociadas.size();
+		int local = 0;
+		int empate= 0;
+		int visit = 0;
+		for (BetsResults temp : apuestasAsociadas ) {
+			Prediction pTemp = temp.getPrediction();
+			switch(pTemp.getTipo()){
+                case "gana_local":
+                	local++;
+                   	break;
+                case "gana_visitante":
+                	visit++;
+                    break;
+                case "empate": 
+                	empate++;
+                    break;      
+            }
+		}
+
+		Map<String,Integer> resp = new HashMap();
+		resp.put("apuestas_totales",total);
+		if(total != 0){
+			resp.put("gana_local", (local * 100)/total);
+			resp.put("gana_visitante",(visit * 100)/total);
+			resp.put("empate",(empate * 100)/total);
+		}
+	    res.body(new JSONObject(resp).toString());
+	    res.type("application/json");
+	    return null;
+	};
 }
