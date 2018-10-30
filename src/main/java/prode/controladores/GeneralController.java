@@ -41,15 +41,21 @@ public class GeneralController {
 				}
 			}
 		}
-		for (int k = 0; k < topPlayers.size() && k < 10; k++) {
-			HashMap<String,String> tempData = new HashMap<String, String>();
-			tempData.put("num",Integer.toString(k+1));
-			tempData.put("username",topPlayers.get(k).getUsername());
-			tempData.put("punt",Integer.toString(topPlayers.get(k).getPoint()));
-			datos.add(tempData);
+		Map<String, Object> respuesta = new HashMap<String, Object>();
+		if (topPlayers.size() == 0) {
+			respuesta.put("titulo","Informacion no disponible");
+		} else {
+			for (int k = 0; k < topPlayers.size() && k < 10; k++) {
+				HashMap<String,String> tempData = new HashMap<String, String>();
+				tempData.put("num",Integer.toString(k+1));
+				tempData.put("username",topPlayers.get(k).getUsername());
+				tempData.put("punt",Integer.toString(topPlayers.get(k).getPoint()));
+				datos.add(tempData);
+			}
+			respuesta.put("hay_elem", datos);
+			respuesta.put("titulo","Top 10 mejores jugadores");
+			respuesta.put("mostrar",true);
 		}
-    	Map<String, List<Map<String,String>>> respuesta = new HashMap<String, List<Map<String, String>>>();
-    	respuesta.put("hay_elem",datos);
 		return new ModelAndView(respuesta, "./views/index.mustache");
 	};
 }
