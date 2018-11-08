@@ -54,8 +54,8 @@ public class Match extends Model {
 			if(!tResul.getTipo().equals("no_jugado")){
 				//El partido ya se jugo
 				resp.put("jugado", "true");
-				resp.put("cantGolVisitante", tResul.getCantGV().toString());
-				resp.put("cantGolLocal", tResul.getCantGL().toString());
+				resp.put("cantGolVisitante", "(" + tResul.getCantGV().toString() + ")");
+				resp.put("cantGolLocal", "(" + tResul.getCantGL().toString() + ")");
 			}
 			return resp;
 		}

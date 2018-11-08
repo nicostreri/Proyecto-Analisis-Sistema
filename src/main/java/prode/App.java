@@ -45,11 +45,11 @@ public class App{
 	    get("/protegido/perfil", UserController.perfil, new MustacheTemplateEngine());
 	    get("/salir", UserController.salir);
 	    post("/protegido/fecha/:id", FechaController.apostarFecha);
-	    get("/protegido/fechaApostada/:id",UserController.listarPartidosApostados, new MustacheTemplateEngine());
+
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());
         post("/protegido/misfixture",FixtureController.suscribirPlayerFixture);
       	get("/protegido/apuestas",UserController.listarApuestas,new MustacheTemplateEngine());
-      	get("/protegido/apuestas/:id_bet",UserController.listarPredicciones,new MustacheTemplateEngine());  
+      	get("/protegido/apuestas/:id",UserController.listarPartidosApostados,new MustacheTemplateEngine());  
 
 
 	    //Routers Api, solo acceso Administradores

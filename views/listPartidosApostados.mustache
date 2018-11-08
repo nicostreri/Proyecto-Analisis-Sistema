@@ -1,7 +1,7 @@
 {{>header}}
 <div class="container" style="padding-top: 2.5rem !important;">
     <div class="row">
-      <h2>Resultado de la Apuesta</h2><small class="text-muted">(10 puntos por resultado acertado, Bonus: 200 mas de la Mitad acertados, 500 todos acertados)</small>
+      <h2>Apuesta</h2><small class="text-muted">(10 puntos por resultado acertado, Bonus: 200 mas de la Mitad acertados, 500 todos acertados)</small>
 		<table class="table">
 		  	<thead>   
            <tr>
@@ -16,8 +16,8 @@
           {{#hay_elem}}
 			    <tr>
             <td>{{fecha_jugada}}</td>
-            <td>{{name_local}}&nbsp;({{cantGolLocal}})</td>
-			      <td>{{name_visitante}}&nbsp;({{cantGolVisitante}})</td>
+            <td>{{name_local}}&nbsp;{{cantGolLocal}}</td>
+			      <td>{{name_visitante}}&nbsp;{{cantGolVisitante}}</td>
             <td>{{apuesta}}</td>
             <td>{{result}}</td>
           </tr>
