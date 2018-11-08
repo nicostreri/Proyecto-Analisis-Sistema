@@ -22,4 +22,23 @@ public class Prediction extends Model {
     public String getTipo(){
 		return getString("result_type");	
 	}
+
+	public String TipoToString(){
+		String tempTipo;
+		switch (this.getTipo()){
+			case "gana_local":
+		        tempTipo = "Gana Local";
+		        break;
+		    case "gana_visitante":
+		        tempTipo = "Gana Visitante";
+		    	break;
+		    case "empate":
+		    	tempTipo= "Empate";
+		        break;
+		    default:
+		        tempTipo = "Sin definir";
+		        break;      
+		}
+		return tempTipo; 
+	}
 }

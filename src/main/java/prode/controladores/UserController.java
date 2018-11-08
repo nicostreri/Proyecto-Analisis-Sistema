@@ -114,79 +114,12 @@ public class UserController {
 		            if(tempBetResult != null ){
 		                Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
 		                Map<String,String> tempDatos = m.getDatos();
-		                String tempTipo = tempPrediction.getTipo();
-		                switch (tempTipo){
-		                   	case "gana_local":
-		                   		tempTipo = "Gana Local";
-		                        break;
-		                   	case "gana_visitante":
-		                   		tempTipo = "Gana Visitante";
-		                        break;
-		                   	case "empate":
-		                   		tempTipo= "Empate";
-		                        break;
-		                   	default:
-		                   		tempTipo = "Sin definir";
-		                        break;      
-		                } 
-		                tempDatos.put("apuesta",tempTipo);
-		                if(tempSchedule.getBoolean("calculated")){
-			            	if(tempPrediction.getHit()){//Acerto
-			                    tempDatos.put("result","Acerto");
-			                }else{
-			                    tempDatos.put("result","No Acerto");      
-			                }
-			            }else{
-			            	tempDatos.put("result", "No Calculado");
-			            }   
+		               	tempDatos.put("apuesta",tempPrediction.TipoToString());
+			            tempDatos.put("result", (tempSchedule.getBoolean("calculated")) ? ((tempPrediction.getHit())? "Acerto" : "No Acerto") : "No Calculado");
 			            datos.add(tempDatos);
 		            }
 	           	}       
 	      	}
-
-
-      
-      	/*if(tempScore.getPlayer().getUsername().equals(tempPlayer.getUsername())){
-        	Bet tempBet = tempScore.obtenerBet();
-        	String idBet = tempBet.getString("id");
-        	Schedule tempSchedule = tempBet.obtenerSchedule();           
-        	List<Map<String,String>> datos = new ArrayList(); 
-	        if(tempSchedule != null){
-	        	List<Match> tempMatch = tempSchedule.obtenerListaPartidos();
-	          	for(Match m : tempMatch){
-	            	Result tempResult = m.obtenerResultado();
-	              	if(!tempResult.getString("result_type").equals("no_jugado")){
-	                	String idResult= tempResult.getString("id");
-	                	BetsResults tempBetResult = BetsResults.findByCompositeKeys(idBet,idResult);
-		                if(tempBetResult != null ){
-		                	Prediction tempPrediction = Prediction.findById(tempBetResult.getIdPrediction());
-		                	Map<String,String> tempDatos = m.getDatos();
-		                	String tempTipo = tempPrediction.getTipo();
-		                	switch (tempTipo){
-		                    	case "gana_local":
-		                    		tempTipo = "Gana Local";
-		                            break;
-		                    	case "gana_visitante":
-		                    		tempTipo = "Gana Visitante";
-		                            break;
-		                    	case "empate":
-		                    		tempTipo= "Empate";
-		                            break;
-		                    	default:
-		                    		tempTipo = "Sin definir";
-		                            break;      
-		                  	} 
-		                  	tempDatos.put("apuesta",tempTipo);
-		                  	if(tempPrediction.getHit()){//Acerto
-		                    	tempDatos.put("result","Acerto");
-		                  	}else{
-		                    	tempDatos.put("result","No Acerto");      
-		                  	}
-		                  	datos.add(tempDatos);
-		              	}
-	            	}
-	          	}        
-	        }*/
         	Map respuesta = new HashMap();
         	respuesta.put("fecha_name",tempSchedule.getString("date_name"));
         	respuesta.put("hay_elem",datos);
