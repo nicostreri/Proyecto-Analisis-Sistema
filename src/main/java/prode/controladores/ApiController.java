@@ -6,20 +6,31 @@ import static spark.Spark.*;
 import org.javalite.activejdbc.Base;
 import java.util.*;
 import org.json.*;
+import org.javalite.activejdbc.Model;
 
 public class ApiController{
+
 	public static Route listarFixture = (req, res) -> {
-		//Se obtiene los Fixtures con el id y el nombre
-	    List<Fixture> temp = Fixture.find("*");
-	    JSONArray resp = new JSONArray();
-	    for(Fixture t : temp){
-	    	//Por cada Fixture
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
+		res.body(ApiController._generarJSONArrayAllIntancesModel(Fixture.find("*")));
 	    res.type("application/json");
 	    return null;
 	};
+
+	public static Route listarEquipos = (req, res) -> {
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Team.find("*")));
+	    res.type("application/json");
+	    return null;
+	};
+
+	
+	private static <T extends IGetDatos> String _generarJSONArrayAllIntancesModel(List<T> elem){
+	    JSONArray resp = new JSONArray();
+	    for(int i=0; i<elem.size(); i++){
+	    	resp.put(new JSONObject(elem.get(i).getDatos()));
+	    }
+	    return resp.toString();
+	}
+
 	
 	//Obtiene las fechas pertenecientes a un Fixture
 	public static Route listarFecha = (req, res) -> {
@@ -110,19 +121,6 @@ public class ApiController{
 			res.body("Creado con Exito");
 		}
 		return null;
-	};
-	
-	public static Route listarEquipos = (req, res) -> {
-		//Se obtiene los Fixtures con el id y el nombre
-	    List<Team> temp = Team.find("*");
-	    JSONArray resp = new JSONArray();
-	    for(Team t : temp){
-	    	//Por cada Fixture
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
-	    res.type("application/json");
-	    return null;
 	};
 
 	public static Route nuevoPartido = (req, res) ->{

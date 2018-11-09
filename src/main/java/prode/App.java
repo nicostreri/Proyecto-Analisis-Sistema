@@ -69,6 +69,7 @@ public class App{
     	//Control de  Exceptions
     	exception(Exception.class, (exception, request, response) -> {
     		response.body( exception.getMessage());
+    		exception.printStackTrace();
 		});
     }
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import org.javalite.activejdbc.annotations.*;
 @Many2Many(other = Player.class, join = "players_fixtures", sourceFKName = "fixture_id", targetFKName = "player_username")
-public class Fixture extends Model{
+public class Fixture extends IGetDatos{
 	static{
 		validatePresenceOf("name").message("Ingrese el nombre del fixture");
 	}
