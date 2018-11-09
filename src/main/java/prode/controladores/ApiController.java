@@ -6,43 +6,40 @@ import static spark.Spark.*;
 import org.javalite.activejdbc.Base;
 import java.util.*;
 import org.json.*;
+import org.javalite.activejdbc.Model;
 
 public class ApiController{
-	public static Route listarFixture = (req, res) -> {
-		//Se obtiene los Fixtures con el id y el nombre
-	    List<Fixture> temp = Fixture.find("*");
+
+	private static <T extends IGetDatos> String _generarJSONArrayAllIntancesModel(List<T> elem){
 	    JSONArray resp = new JSONArray();
-	    for(Fixture t : temp){
-	    	//Por cada Fixture
-	    	resp.put(new JSONObject(t.getDatos()));
+	    for(int i=0; i<elem.size(); i++){
+	    	resp.put(new JSONObject(elem.get(i).getDatos()));
 	    }
-	    res.body(resp.toString());
+	    return resp.toString();
+	}
+
+	public static Route listarFixture = (req, res) -> {
+		res.body(ApiController._generarJSONArrayAllIntancesModel(Fixture.find("*")));
 	    res.type("application/json");
 	    return null;
 	};
-	
+
+	public static Route listarEquipos = (req, res) -> {
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Team.find("*")));
+	    res.type("application/json");
+	    return null;
+	};
+
 	//Obtiene las fechas pertenecientes a un Fixture
 	public static Route listarFecha = (req, res) -> {
-		List<Schedule> temp = Schedule.find("fixture_id= ?",req.params(":idFix"));
-		JSONArray resp = new JSONArray();
-	    for(Schedule t : temp){
-	    	//Por cada Schedule
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Schedule.find("fixture_id= ?",req.params(":idFix"))));
 	    res.type("application/json");
 	    return null;
 	};
     
     //Obtiene los partidos pertenecientes a un Schedule
 	public static Route listarPartido = (req, res) -> {
-		List<Match> tempM = Match.find("schedule_id= ?",req.params(":idFecha"));
-		JSONArray resp = new JSONArray();
-	    for(Match t : tempM){
-	    	//Por cada Match
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Match.find("schedule_id= ?",req.params(":idFecha"))));
 	    res.type("application/json");
 	    return null;
 	};
@@ -110,19 +107,6 @@ public class ApiController{
 			res.body("Creado con Exito");
 		}
 		return null;
-	};
-	
-	public static Route listarEquipos = (req, res) -> {
-		//Se obtiene los Fixtures con el id y el nombre
-	    List<Team> temp = Team.find("*");
-	    JSONArray resp = new JSONArray();
-	    for(Team t : temp){
-	    	//Por cada Fixture
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
-	    res.type("application/json");
-	    return null;
 	};
 
 	public static Route nuevoPartido = (req, res) ->{

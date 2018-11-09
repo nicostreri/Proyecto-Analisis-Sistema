@@ -2,7 +2,7 @@ package prode;
 import java.util.*;
 import org.javalite.activejdbc.Model;
 
-public class Team extends Model {
+public class Team extends IGetDatos {
 	static{
 		validatePresenceOf("name").message("Ingrese nombre del Equipo");
 	}

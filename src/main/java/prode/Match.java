@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Match extends Model {
+public class Match extends IGetDatos{
 	static{
 			dateFormat("yyyy-MM-dd HH:mm:ss","match_date");//FORMATO: 'YYYY-MM-DD HH:MM:SS'
     	validatePresenceOf("match_date").message("Ingrese fecha del match");
