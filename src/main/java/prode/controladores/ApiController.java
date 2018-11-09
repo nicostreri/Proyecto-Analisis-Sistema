@@ -10,6 +10,14 @@ import org.javalite.activejdbc.Model;
 
 public class ApiController{
 
+	private static <T extends IGetDatos> String _generarJSONArrayAllIntancesModel(List<T> elem){
+	    JSONArray resp = new JSONArray();
+	    for(int i=0; i<elem.size(); i++){
+	    	resp.put(new JSONObject(elem.get(i).getDatos()));
+	    }
+	    return resp.toString();
+	}
+
 	public static Route listarFixture = (req, res) -> {
 		res.body(ApiController._generarJSONArrayAllIntancesModel(Fixture.find("*")));
 	    res.type("application/json");
@@ -22,38 +30,16 @@ public class ApiController{
 	    return null;
 	};
 
-	
-	private static <T extends IGetDatos> String _generarJSONArrayAllIntancesModel(List<T> elem){
-	    JSONArray resp = new JSONArray();
-	    for(int i=0; i<elem.size(); i++){
-	    	resp.put(new JSONObject(elem.get(i).getDatos()));
-	    }
-	    return resp.toString();
-	}
-
-	
 	//Obtiene las fechas pertenecientes a un Fixture
 	public static Route listarFecha = (req, res) -> {
-		List<Schedule> temp = Schedule.find("fixture_id= ?",req.params(":idFix"));
-		JSONArray resp = new JSONArray();
-	    for(Schedule t : temp){
-	    	//Por cada Schedule
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Schedule.find("fixture_id= ?",req.params(":idFix"))));
 	    res.type("application/json");
 	    return null;
 	};
     
     //Obtiene los partidos pertenecientes a un Schedule
 	public static Route listarPartido = (req, res) -> {
-		List<Match> tempM = Match.find("schedule_id= ?",req.params(":idFecha"));
-		JSONArray resp = new JSONArray();
-	    for(Match t : tempM){
-	    	//Por cada Match
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Match.find("schedule_id= ?",req.params(":idFecha"))));
 	    res.type("application/json");
 	    return null;
 	};

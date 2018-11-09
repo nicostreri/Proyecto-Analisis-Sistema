@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Schedule extends Model {
+public class Schedule extends IGetDatos {
 	static{
 		validatePresenceOf("date_name").message("Ingrese nombre de la fecha");
 	}
