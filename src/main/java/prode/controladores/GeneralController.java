@@ -56,6 +56,9 @@ public class GeneralController {
 			respuesta.put("titulo","Top 10 mejores jugadores");
 			respuesta.put("mostrar",true);
 		}
+		if (!Util.userLogeado(req)) {
+			respuesta.put("mostrarLogReg", true);
+		}
 		return new ModelAndView(respuesta, "./views/index.mustache");
 	};
 }
