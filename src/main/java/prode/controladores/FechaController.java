@@ -1,6 +1,7 @@
 package prode.controladores;
 
 import prode.*;
+import prode.exceptions.*;
 import spark.*;
 import static spark.Spark.*;
 import org.javalite.activejdbc.Base;
@@ -50,36 +51,29 @@ public class FechaController{
 			-Crear la Apuesta y Generar una prediccion por cada resultado de partido
 	    */
 		String idFecha = req.params(":id");
-		if(Util.fechaAbierta(idFecha)){
-			Schedule temp = Schedule.findById(idFecha);
-			if(Util.userSuscripto(req.session().attribute("username"), temp.obtenerFixturePerteneciente().getString("id"))){
-				JSONObject obj = null;
-				try{
-					obj = new JSONObject(req.body());
-				}catch (Exception e) {
-					res.body("Error: El cuerpo de la Peticion es incorrecto.");
-					res.status(400);	
-				}
-				if(obj != null){
-					if(Util.apuestaValida(obj,idFecha)){
-						res.body("TODO I");
-						//El usuario ya aposto??
-						Bet betRea = Bet.findFirst("schedule_id=? and username_player=?", idFecha, req.session().attribute("username"));
-						if(betRea != null){
-							res.body("Error: Ya aposto a la fecha");
-						}else{
-							res.body(Util.registrarApuesta(obj, idFecha, req.session().attribute("username")));
-						}
-					}else{
-						res.body("Error: La apuesta no es correcta.");
-						res.status(400);
-					}
-				}
+		if(!Util.fechaAbierta(idFecha)){
+			throw new ApuestaFechaException("Esta fecha esta bloqueada.");
+		}
+		Schedule temp = Schedule.findById(idFecha);
+		if(!Util.userSuscripto(req.session().attribute("username"), temp.obtenerFixturePerteneciente().getString("id"))){
+			throw new ApuestaFechaException("Debe estar suscripto al Fixture.");
+		}
+		
+		JSONObject obj = null;
+		try{
+			obj = new JSONObject(req.body());
+		}catch (Exception e) {
+			throw new ApuestaFechaException("El cuerpo de la Peticion es Incorrecto.");
+		}
+		if(obj != null){
+			if(Util.apuestaValida(obj,idFecha)){
+				//El usuario ya aposto??
+				Bet betRea = Bet.findFirst("schedule_id=? and username_player=?", idFecha, req.session().attribute("username"));
+				res.body( (betRea != null)? ("Error: Ya aposto a la Fecha.") : (Util.registrarApuesta(obj, idFecha, req.session().attribute("username"))) );
+						
 			}else{
-				res.body("Error: Debe estar suscripto al Fixture.");
+				throw new ApuestaFechaException("La apuesta no es correcta");
 			}
-		}else{
-			res.body("Error: Esta fecha esta bloqueada.");
 		}
 	    return null;
 	};
