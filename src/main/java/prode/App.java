@@ -1,5 +1,6 @@
 package prode;
 
+import prode.exceptions.*;
 import com.codahale.metrics.*;
 import java.util.concurrent.TimeUnit;
 import prode.*;
@@ -67,6 +68,7 @@ public class App{
 
 
     	//Control de  Exceptions
+    	exception(ApuestaFechaException.class, ExceptionController.catchExceptions(400));
     	exception(Exception.class, (exception, request, response) -> {
     		response.body( exception.getMessage());
     		exception.printStackTrace();
