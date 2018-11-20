@@ -80,13 +80,7 @@ public class Util{
 	public static String registrarApuesta(JSONObject apuesta, String idFecha, String user){
 		Base.openTransaction();
 		try{
-			Bet nueva = new Bet();
-			Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");String s = formatter.format(new Date());
-			nueva.setFecha(s);
-			nueva.setString("schedule_id",idFecha);
-			nueva.setString("username_player",user);
-			nueva.saveIt();
-
+			Bet nueva = getBet(idFecha,user);
 			//Se guarda la apuesta a cada partido
 			Iterator<String> it = apuesta.keys();
 			while(it.hasNext()){
@@ -110,7 +104,18 @@ public class Util{
 		}
 		return "No se pudo realizar la Apuesta";
 	}
-
+	
+	private static Bet getBet(String idFecha, String user) {
+		Bet auxBet = new Bet();
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String s = formatter.format(new Date());
+		auxBet.setFecha(s);
+		auxBet.setString("schedule_id",idFecha);
+		auxBet.setString("username_player",user);
+		auxBet.saveIt();
+		return auxBet;
+	}
+	
 	private static String obtenerTipo(int t){
 		if(t==-1)return "gana_local";
 		if(t== 0)return "empate";
