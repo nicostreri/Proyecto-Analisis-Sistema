@@ -11,7 +11,7 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class App{
     public static void main( String[] args ){
-    	Filters.reporter.start(1, TimeUnit.SECONDS);
+    	Metrics.iniciar();
     	port(8081);
 
     	//Filtros
