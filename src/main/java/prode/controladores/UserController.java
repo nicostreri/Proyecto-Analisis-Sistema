@@ -26,7 +26,7 @@ public class UserController {
 		    	if(User.logear(user,pass)!=null){
 		    		req.session().attribute("logeado", true);
 		    		req.session().attribute("username", user);
-
+            Metrics.requestsLogin.mark();
 		    		//Se determina si es un usuario Administrador
 		    		if(Administrator.findById(user) != null){
 		    			req.session().attribute("isAdmin", true);
