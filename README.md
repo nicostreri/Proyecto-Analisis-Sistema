@@ -1,4 +1,3 @@
-﻿# Rama de Desarrollo
 # Proyecto Analisis y Diseño de Sistemas
 ## Introducción
 Proyecto que tiene como objetivo la realización de un Juego PRODE.
