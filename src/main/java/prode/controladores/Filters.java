@@ -9,15 +9,9 @@ import static spark.Spark.*;
 import org.javalite.activejdbc.Base;
 
 public class Filters{
-	private static MetricRegistry metrics = new MetricRegistry();
-	private static Meter requests = metrics.meter("peticiones-totales");
-	public static final ConsoleReporter reporter = ConsoleReporter.forRegistry(metrics)
-                                                .convertRatesTo(TimeUnit.SECONDS)
-                                                .convertDurationsTo(TimeUnit.MILLISECONDS)
-                                                .build();
 
 	public static Filter preGeneral = (req, res) -> {
-		requests.mark();
+		Metrics.requestsPet.mark();
     	if(!Base.hasConnection()){ 
     		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://127.0.0.1/prode?nullNamePatternMatchesAll=true", "root", "root");	
     	}

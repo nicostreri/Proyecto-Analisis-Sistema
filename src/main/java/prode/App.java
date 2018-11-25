@@ -1,5 +1,6 @@
 package prode;
 
+import prode.exceptions.*;
 import com.codahale.metrics.*;
 import java.util.concurrent.TimeUnit;
 import prode.*;
@@ -10,7 +11,7 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class App{
     public static void main( String[] args ){
-    	Filters.reporter.start(1, TimeUnit.SECONDS);
+    	Metrics.iniciar();
     	port(8081);
 
     	//Filtros
@@ -24,6 +25,7 @@ public class App{
 		get("/", GeneralController.index, new MustacheTemplateEngine());
 		get("/stop", GeneralController.stop);
 
+		get("/partido-estadistica/:id", ApiController.estadisticaPartido);
 
 		//Registro de Usuario
 		get("/registro", UserController.registrarForm, new MustacheTemplateEngine());
@@ -44,11 +46,11 @@ public class App{
 	    get("/protegido/perfil", UserController.perfil, new MustacheTemplateEngine());
 	    get("/salir", UserController.salir);
 	    post("/protegido/fecha/:id", FechaController.apostarFecha);
-	    get("/protegido/fechaApostada/:id",UserController.listarPartidosApostados, new MustacheTemplateEngine());
+
         get("/protegido/misfixture",FixtureController.listarMisFixture,new MustacheTemplateEngine());
         post("/protegido/misfixture",FixtureController.suscribirPlayerFixture);
       	get("/protegido/apuestas",UserController.listarApuestas,new MustacheTemplateEngine());
-      	get("/protegido/apuestas/:id_bet",UserController.listarPredicciones,new MustacheTemplateEngine());  
+      	get("/protegido/apuestas/:id",UserController.listarPartidosApostados,new MustacheTemplateEngine());  
 
 
 	    //Routers Api, solo acceso Administradores
@@ -66,8 +68,10 @@ public class App{
 
 
     	//Control de  Exceptions
+    	exception(ApuestaFechaException.class, ExceptionController.catchExceptions(400));
     	exception(Exception.class, (exception, request, response) -> {
     		response.body( exception.getMessage());
+    		exception.printStackTrace();
 		});
     }
 }

@@ -18,8 +18,8 @@
 			    	{{#jugado}}
 						<td><i class="fas fa-futbol" style="color: green;" title="Jugado"></i></th>
 				      	<td>{{fecha_jugada}}</td>
-			      		<td>{{name_local}}&nbsp;({{cantGolLocal}})</td>
-			      		<td>{{name_visitante}}&nbsp;({{cantGolVisitante}})</td>
+			      		<td>{{name_local}}&nbsp;{{cantGolLocal}}</td>
+			      		<td>{{name_visitante}}&nbsp;{{cantGolVisitante}}</td>
 					{{/jugado}}
 					{{^jugado}}
 						<td><i class="fas fa-futbol" style="color: red;" title="No Jugado"></i></th>
@@ -29,11 +29,15 @@
 					{{/jugado}}
 			      	
 			      	{{#posible_apostar}}
-			      		<td><div id="{{id}}" class="btn-group" role="group" aria-label="Basic example">
-						  	<button onclick="addVoto('{{id}}',-1)" type="button" class="btn btn-default" title="Gana Local"><i class="far fa-smile"></i></button>
-						  	<button onclick="addVoto('{{id}}',0)" type="button" class="btn btn-default" title="Empate"><i class="far fa-meh"></i></button>
-						  	<button onclick="addVoto('{{id}}',1)" type="button" class="btn btn-default" title="Gana Visitante"><i class="far fa-smile"></i></button>
-						</div></td>
+			      		<td>
+			      			<div id="{{id}}" class="btn-group" role="group" aria-label="Basic example">
+						  		<button onclick="addVoto('{{id}}',-1)" type="button" class="btn btn-default" title="Gana Local"><i class="far fa-smile"></i></button>
+						  		<button onclick="addVoto('{{id}}',0)" type="button" class="btn btn-default" title="Empate"><i class="far fa-meh"></i></button>
+						  		<button onclick="addVoto('{{id}}',1)" type="button" class="btn btn-default" title="Gana Visitante"><i class="far fa-smile"></i></button>
+							</div>
+							<button onclick="obtenerDatosEstadisticos('{{id}}')" type="button" class="btn btn-default" title="Gana Visitante"><i class="fas fa-percent"></i></button>
+							<div id="estadisticas-{{id}}"></div>
+						</td>
 			      	{{/posible_apostar}}
 			      	{{^posible_apostar}}
 			      		<td></td>
@@ -100,6 +104,32 @@
 		    },
 		    error: function (jqXHR, exception) {
 			    alert(jqXHR.responseText);
+			}
+		});
+	}
+
+	function obtenerDatosEstadisticos(idPartido){
+		var template = `
+		<div class="progress" style="">
+		  <div class="progress-bar bg-success" role="progressbar" style="width: [[puntos_local]]%">Gana Local</div>
+		  <div class="progress-bar bg-warning" role="progressbar" style="width: [[puntos_empate]]%">Empate</div>
+		  <div class="progress-bar bg-success" role="progressbar" style="width: [[puntos_visitante]]%">Gana Visitante</div>
+		</div>
+		`;
+		$.ajax("../../partido-estadistica/"+idPartido, {
+		    type: 'get',
+		    success: function(data){
+		    	if(data.apuestas_totales === 0){
+		    		$("#estadisticas-"+idPartido).html("No hay datos.");
+		    	}else{
+		    		template = template.replace("[[puntos_local]]",data.gana_local);
+		    		template = template.replace("[[puntos_empate]]",data.empate);
+		    		template = template.replace("[[puntos_visitante]]",data.gana_visitante);
+		    		$("#estadisticas-"+idPartido).html(template);
+		    	}
+		    },
+		    error: function (jqXHR, exception) {
+			    alert("No se pudo cargar las estadisticas del Partido.");
 			}
 		});
 	}

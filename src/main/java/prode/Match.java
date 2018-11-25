@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Match extends Model {
+public class Match extends IGetDatos{
 	static{
 			dateFormat("yyyy-MM-dd HH:mm:ss","match_date");//FORMATO: 'YYYY-MM-DD HH:MM:SS'
     	validatePresenceOf("match_date").message("Ingrese fecha del match");
@@ -32,7 +32,7 @@ public class Match extends Model {
 		}
 		//Retorna el resultado del partido
 		public Result obtenerResultado(){
-			return Result.findFirst("id=?",this.get("result_id"));
+			return Result.findFirst("id = ?",this.getInteger("result_id"));
 		}
 
 		public Map<String,String> getDatos(){
@@ -54,8 +54,8 @@ public class Match extends Model {
 			if(!tResul.getTipo().equals("no_jugado")){
 				//El partido ya se jugo
 				resp.put("jugado", "true");
-				resp.put("cantGolVisitante", tResul.getCantGV().toString());
-				resp.put("cantGolLocal", tResul.getCantGL().toString());
+				resp.put("cantGolVisitante", "(" + tResul.getCantGV().toString() + ")");
+				resp.put("cantGolLocal", "(" + tResul.getCantGL().toString() + ")");
 			}
 			return resp;
 		}

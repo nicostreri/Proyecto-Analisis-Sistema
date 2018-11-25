@@ -7,18 +7,26 @@ public class ResultValidator extends ValidatorAdapter{
 	
 	@Override
 	public void validate(Model m){
-		boolean valid = true;
+		boolean notValid = true;
 		String te = m.getString("type_result");
 
-		if(te == null || te.equals("")){
-			valid = false;
-		}else{
-			if(!te.equals("empate") && !te.equals("gana_local") && !te.equals("gana_visitante") && !te.equals("no_jugado")) {
-				valid = false;
+		if (te != null ) {
+			switch(te) {
+			case "empate" : notValid = false;
+			break;
+			case "gana_local" : notValid = false;
+			break;
+			case "gana_visitante" : notValid = false;
+			break;
+			case "no_jugado" : notValid = false;
+			break;
+			
 			}
+		};
+		
+		if(notValid) {
+         	m.addValidator(this, "enum_error");
 		}
-		if(!valid)
-         	m.addValidator(this, "enum_error");				
 	}	
 }
 

@@ -6,43 +6,40 @@ import static spark.Spark.*;
 import org.javalite.activejdbc.Base;
 import java.util.*;
 import org.json.*;
+import org.javalite.activejdbc.Model;
 
 public class ApiController{
-	public static Route listarFixture = (req, res) -> {
-		//Se obtiene los Fixtures con el id y el nombre
-	    List<Fixture> temp = Fixture.find("*");
+
+	private static <T extends IGetDatos> String _generarJSONArrayAllIntancesModel(List<T> elem){
 	    JSONArray resp = new JSONArray();
-	    for(Fixture t : temp){
-	    	//Por cada Fixture
-	    	resp.put(new JSONObject(t.getDatos()));
+	    for(int i=0; i<elem.size(); i++){
+	    	resp.put(new JSONObject(elem.get(i).getDatos()));
 	    }
-	    res.body(resp.toString());
+	    return resp.toString();
+	}
+
+	public static Route listarFixture = (req, res) -> {
+		res.body(ApiController._generarJSONArrayAllIntancesModel(Fixture.find("*")));
 	    res.type("application/json");
 	    return null;
 	};
-	
+
+	public static Route listarEquipos = (req, res) -> {
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Team.find("*")));
+	    res.type("application/json");
+	    return null;
+	};
+
 	//Obtiene las fechas pertenecientes a un Fixture
 	public static Route listarFecha = (req, res) -> {
-		List<Schedule> temp = Schedule.find("fixture_id= ?",req.params(":idFix"));
-		JSONArray resp = new JSONArray();
-	    for(Schedule t : temp){
-	    	//Por cada Schedule
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Schedule.find("fixture_id= ?",req.params(":idFix"))));
 	    res.type("application/json");
 	    return null;
 	};
     
     //Obtiene los partidos pertenecientes a un Schedule
 	public static Route listarPartido = (req, res) -> {
-		List<Match> tempM = Match.find("schedule_id= ?",req.params(":idFecha"));
-		JSONArray resp = new JSONArray();
-	    for(Match t : tempM){
-	    	//Por cada Match
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
+	    res.body(ApiController._generarJSONArrayAllIntancesModel(Match.find("schedule_id= ?",req.params(":idFecha"))));
 	    res.type("application/json");
 	    return null;
 	};
@@ -111,19 +108,6 @@ public class ApiController{
 		}
 		return null;
 	};
-	
-	public static Route listarEquipos = (req, res) -> {
-		//Se obtiene los Fixtures con el id y el nombre
-	    List<Team> temp = Team.find("*");
-	    JSONArray resp = new JSONArray();
-	    for(Team t : temp){
-	    	//Por cada Fixture
-	    	resp.put(new JSONObject(t.getDatos()));
-	    }
-	    res.body(resp.toString());
-	    res.type("application/json");
-	    return null;
-	};
 
 	public static Route nuevoPartido = (req, res) ->{
 		String local = req.queryParams("equipoLocal");
@@ -161,5 +145,47 @@ public class ApiController{
 			}
 		}
 		return null;
+	};
+
+
+	/**
+	 * Obtiene las estadisticas de las apuestas de un Partido
+	 * Retorna:  Porcentaje de Gana Local, % Empate, % Gana Visitante
+	*/
+	public static Route estadisticaPartido = (req, res) -> {
+		String idPartido = req.params(":id");
+		Match partido = Match.findById(idPartido);
+		Result rPart = partido.obtenerResultado();
+		
+		List<BetsResults> apuestasAsociadas = BetsResults.find("result_id = ?", rPart.getString("id"));
+		int total = apuestasAsociadas.size();
+		int local = 0;
+		int empate= 0;
+		int visit = 0;
+		for (BetsResults temp : apuestasAsociadas ) {
+			Prediction pTemp = temp.getPrediction();
+			switch(pTemp.getTipo()){
+                case "gana_local":
+                	local++;
+                   	break;
+                case "gana_visitante":
+                	visit++;
+                    break;
+                case "empate": 
+                	empate++;
+                    break;      
+            }
+		}
+
+		Map<String,Integer> resp = new HashMap();
+		resp.put("apuestas_totales",total);
+		if(total != 0){
+			resp.put("gana_local", (local * 100)/total);
+			resp.put("gana_visitante",(visit * 100)/total);
+			resp.put("empate",(empate * 100)/total);
+		}
+	    res.body(new JSONObject(resp).toString());
+	    res.type("application/json");
+	    return null;
 	};
 }
